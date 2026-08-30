@@ -114,9 +114,20 @@
     background:rgba(255,255,255,.08); border:2px solid rgba(141,251,255,.4);
     border-radius:32px; backdrop-filter:blur(6px);
     display:flex; flex-direction:column; align-items:center; justify-content:center;
-    transform:rotate(-4deg);
-    opacity:0; animation:riseIn 1s ease forwards; animation-delay:1.3s;
+    opacity:0; animation:riseIn 1s ease forwards 1.3s, hvBreathe 3.4s ease-in-out infinite 2.3s;
   }
+  .hero-visual-card::before{
+    content:''; position:absolute; inset:-30px; border-radius:50%;
+    border:2px dashed rgba(141,251,255,.4);
+    animation:hvSpin 16s linear infinite; pointer-events:none; z-index:-1;
+  }
+  .hero-visual-card::after{
+    content:''; position:absolute; inset:-52px; border-radius:50%;
+    border:1px dotted rgba(141,251,255,.22);
+    animation:hvSpin 24s linear infinite reverse; pointer-events:none; z-index:-1;
+  }
+  @keyframes hvSpin{to{transform:rotate(360deg);}}
+  @keyframes hvBreathe{0%,100%{transform:translateY(0) scale(1);} 50%{transform:translateY(0) scale(1.05);}}
   .hero-visual-card .hv-quote{font-size:56px; font-weight:900; color:var(--cyan); opacity:.6; line-height:1;}
   .hero-visual-card .hv-fit{font-size:88px; font-weight:900; color:var(--white); -webkit-text-stroke:2px var(--cyan); letter-spacing:-2px; line-height:.9;}
   .hero-visual-card .hv-tag{margin-top:14px; font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--cyan);}
@@ -250,18 +261,42 @@
   .service-card::after{content:''; position:absolute; width:120px; height:120px; border-radius:50%; background:var(--cyan); opacity:.08; right:-40px; bottom:-40px; transition:transform .4s ease;}
   .service-card:hover::after{transform:scale(1.4);}
 
-  .workframe-strip{margin-top:64px; background:var(--maroon-deep); border-radius:24px; padding:40px; display:grid; grid-template-columns:repeat(6,1fr); gap:0;}
+  .wf-tabs{margin-top:64px;}
+  .wf-tab-buttons{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px;}
+  .wf-tab-btn{background:rgba(255,255,255,.14); color:var(--white); font-weight:800; font-size:12.5px; letter-spacing:.4px; padding:12px 20px; border-radius:999px; border:2px solid transparent; transition:.25s ease; cursor:pointer; font-family:inherit;}
+  .wf-tab-btn:hover{background:rgba(255,255,255,.22);}
+  .wf-tab-btn.active{background:var(--maroon); border-color:var(--cyan); color:var(--cyan);}
+  .wf-tab-panel{display:none; background:var(--maroon-deep); border-radius:24px; padding:40px;}
+  .wf-tab-panel.active{display:block;}
+
+  .workframe-strip{display:grid; grid-template-columns:repeat(6,1fr); gap:0;}
   .wf-col{padding:0 16px; border-left:1px solid rgba(255,255,255,.12);}
   .wf-col:first-child{border-left:none;}
   .wf-col .wf-num{font-size:30px; font-weight:900; color:var(--white); opacity:.9;}
   .wf-col .wf-q{color:var(--cyan); font-weight:800; font-size:14px; text-transform:uppercase; margin:6px 0 12px;}
   .wf-col ul{list-style:none; font-size:11.5px; line-height:2; opacity:.75;}
+
+  .wf-quad{display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
+  .wf-quad-item{padding:22px; border-radius:14px; background:rgba(255,255,255,.06);}
+  .wf-quad-item h4{color:var(--cyan); font-size:15px; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;}
+  .wf-quad-item p{font-size:12.5px; line-height:1.6; opacity:.75;}
+
+  .wf-ux-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:28px;}
+  .wf-ux-col{padding:0 16px; border-left:1px solid rgba(255,255,255,.12);}
+  .wf-ux-col:first-child{border-left:none;}
+  .wf-ux-col .wf-q{color:var(--cyan); font-weight:800; font-size:14px; text-transform:uppercase; margin-bottom:8px;}
+  .wf-ux-col .wf-question{font-size:12px; opacity:.65; font-style:italic; margin-bottom:10px; line-height:1.4;}
+  .wf-ux-col ul{list-style:none; font-size:11.5px; line-height:2; opacity:.75;}
+  .wf-neuro-row{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; padding-top:24px; border-top:1px solid rgba(255,255,255,.12);}
+  .wf-neuro-box{background:rgba(141,251,255,.08); border:1px solid rgba(141,251,255,.3); border-radius:14px; padding:16px;}
+  .wf-neuro-box .wf-neuro-label{color:var(--cyan); font-weight:800; font-size:10.5px; letter-spacing:1px; text-transform:uppercase; margin-bottom:8px;}
+  .wf-neuro-box ul{list-style:none; font-size:11.5px; line-height:1.9; opacity:.8;}
   .wf-caption{margin-top:20px; font-size:12px; opacity:.55; font-style:italic; text-align:center;}
 
   /* ---------- Portfolio ---------- */
   #portfolio{background:var(--maroon-deep);}
-  .portfolio-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
-  .project-card{border-radius:20px; overflow:hidden; background:var(--maroon); transition:transform .35s ease; cursor:pointer;}
+  .portfolio-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:24px;}
+  .project-card{border-radius:20px; overflow:hidden; background:var(--maroon); transition:transform .35s ease; cursor:pointer; border:none; text-align:left; font-family:inherit; color:inherit; padding:0; display:block; width:100%;}
   .project-card:hover{transform:translateY(-10px);}
   .project-thumb{
     height:220px; display:flex; align-items:center; justify-content:center;
@@ -269,32 +304,65 @@
     color:var(--maroon-deep); background:linear-gradient(135deg, var(--cyan), var(--pink) 130%);
     position:relative; overflow:hidden;
   }
+  .project-thumb img{width:100%; height:100%; object-fit:cover; display:block;}
   .project-thumb span{position:relative; z-index:2; background:var(--white); padding:6px 14px; border-radius:999px; font-size:11px;}
   .project-thumb::before{content:''; position:absolute; inset:0; background:repeating-linear-gradient(45deg, rgba(255,255,255,.15) 0 2px, transparent 2px 14px);}
+  .project-card.has-photo .project-thumb::before{display:none;}
   .project-body{padding:22px 22px 26px;}
   .project-body .tag{font-size:11px; font-weight:800; letter-spacing:1.5px; color:var(--cyan); text-transform:uppercase;}
   .project-body h4{font-size:19px; font-weight:800; margin:10px 0 8px;}
   .project-body p{font-size:13px; opacity:.75; line-height:1.6;}
   .placeholder-note{margin-top:28px; font-size:12.5px; opacity:.6; text-align:center;}
 
+  /* Case study lightbox */
+  .lightbox{position:fixed; inset:0; z-index:200; display:none; align-items:center; justify-content:center; padding:24px;}
+  .lightbox.open{display:flex;}
+  .lightbox-backdrop{position:absolute; inset:0; background:rgba(19,16,13,.82); backdrop-filter:blur(4px);}
+  .lightbox-panel{
+    position:relative; z-index:1; max-width:760px; width:100%; max-height:88vh; overflow-y:auto;
+    background:var(--maroon-deep); border-radius:24px; padding:0 0 36px;
+    transform:translateY(24px) scale(.97); opacity:0; transition:transform .35s cubic-bezier(.2,.8,.2,1), opacity .35s ease;
+  }
+  .lightbox.open .lightbox-panel{transform:translateY(0) scale(1); opacity:1;}
+  .lightbox-img{width:100%; aspect-ratio:2/1; object-fit:cover; display:block; border-radius:24px 24px 0 0;}
+  .lightbox-close{
+    position:absolute; top:16px; right:16px; z-index:2; width:36px; height:36px; border-radius:50%;
+    background:rgba(19,16,13,.6); color:var(--white); border:none; font-size:18px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .lightbox-body{padding:28px 32px 0;}
+  .lightbox-body .tag{font-size:11px; font-weight:800; letter-spacing:1.5px; color:var(--cyan); text-transform:uppercase;}
+  .lightbox-body h3{font-size:26px; font-weight:900; margin:10px 0 14px;}
+  .lightbox-body p.lead{font-size:14px; line-height:1.7; opacity:.85; margin-bottom:18px;}
+  .lightbox-body .lb-label{font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--cyan); opacity:.9; margin-bottom:10px;}
+  .lightbox-body ul{list-style:none; margin-bottom:20px;}
+  .lightbox-body ul li{font-size:13px; line-height:1.6; opacity:.85; padding-left:18px; position:relative; margin-bottom:8px;}
+  .lightbox-body ul li::before{content:'→'; position:absolute; left:0; color:var(--cyan);}
+  .lightbox-body .lb-outcome{background:rgba(141,251,255,.08); border:1px solid rgba(141,251,255,.3); border-radius:14px; padding:16px 18px; font-size:13px; line-height:1.6;}
+  .lightbox-body .lb-note{margin-top:16px; font-size:11.5px; opacity:.55; font-style:italic;}
+
   /* ---------- Rate card teaser ---------- */
   #rates{background:var(--pink);}
   .typewriter-cursor{display:inline-block; width:3px; height:.85em; margin-left:2px; vertical-align:-2px; background:var(--cyan); animation:twBlink .8s steps(1) infinite;}
   @keyframes twBlink{50%{opacity:0;}}
-  .rate-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; perspective:1200px;}
+  .rate-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; perspective:1200px;}
   .rate-card{
     background:var(--maroon); border-radius:18px; padding:26px 20px; text-align:center;
     transform-style:preserve-3d; opacity:0; transform:rotateY(-90deg);
     transition:opacity .6s ease, transform .7s cubic-bezier(.34,1.56,.64,1);
   }
   .rate-card:nth-child(1){transition-delay:0s;}
-  .rate-card:nth-child(2){transition-delay:.12s;}
-  .rate-card:nth-child(3){transition-delay:.24s;}
-  .rate-card:nth-child(4){transition-delay:.36s;}
+  .rate-card:nth-child(2){transition-delay:.09s;}
+  .rate-card:nth-child(3){transition-delay:.18s;}
+  .rate-card:nth-child(4){transition-delay:.27s;}
+  .rate-card:nth-child(5){transition-delay:.36s;}
+  .rate-card:nth-child(6){transition-delay:.45s;}
   .rate-card.flip-in{opacity:1; transform:rotateY(0deg);}
   .rate-card.flip-in:hover{transform:translateY(-6px) rotateY(0deg);}
   .rate-card .rate-label{font-size:12px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; opacity:.8;}
-  .rate-card .rate-num{font-size:34px; font-weight:900; color:var(--cyan); margin-top:12px;}
+  .rate-card .rate-num{font-size:32px; font-weight:900; color:var(--cyan); margin-top:12px;}
+  .rate-card .rate-unit{font-size:13px; font-weight:700; opacity:.65; margin-left:1px;}
+  .rate-card .rate-turnaround{margin-top:10px; font-size:11px; opacity:.6; line-height:1.4;}
   .rate-note{margin-top:24px; font-size:12.5px; opacity:.65; text-align:center;}
 
   /* ---------- Contact CTA ---------- */
@@ -313,6 +381,10 @@
     .workframe-strip{grid-template-columns:repeat(3,1fr); row-gap:24px;}
     .wf-col{border-left:none; border-top:1px solid rgba(255,255,255,.12); padding-top:16px;}
     .wf-col:nth-child(3n+1){border-left:none;}
+    .wf-quad{grid-template-columns:1fr;}
+    .wf-ux-grid, .wf-neuro-row{grid-template-columns:1fr; row-gap:20px;}
+    .wf-ux-col{border-left:none; border-top:1px solid rgba(255,255,255,.12); padding-top:16px;}
+    .wf-ux-col:first-child{border-top:none; padding-top:0;}
     .rate-grid{grid-template-columns:repeat(2,1fr);}
     nav ul{display:none;}
   }
@@ -355,8 +427,8 @@
         <span class="hv-fit">FIT</span>
         <span class="hv-tag">is all you need</span>
       </div>
-      <div class="hero-stat hero-stat-1">6 <small>service lines</small></div>
-      <div class="hero-stat hero-stat-2">1 <small>system, not six jobs</small></div>
+      <div class="hero-stat hero-stat-1">06 <small>service lines</small></div>
+      <div class="hero-stat hero-stat-2">01 <small>system, not 06 jobs</small></div>
     </div>
   </div>
   <div class="scroll-cue"><div class="line"></div>SCROLL</div>
@@ -430,15 +502,112 @@
     <div class="service-card reveal"><div class="num">06</div><h3>Digital &amp; Influencer Marketing</h3><p>KOL networks, campaign data, and growth you can actually measure.</p></div>
   </div>
 
-  <div class="workframe-strip reveal">
-    <div class="wf-col"><div class="wf-num">01</div><div class="wf-q">What</div><ul><li>Budget</li><li>ROI</li><li>Market Fit</li><li>Tone</li></ul></div>
-    <div class="wf-col"><div class="wf-num">02</div><div class="wf-q">How</div><ul><li>Quality Control</li><li>Time Tracker</li><li>Accomplishment</li></ul></div>
-    <div class="wf-col"><div class="wf-num">03</div><div class="wf-q">Who</div><ul><li>Decision-maker</li><li>Approval</li><li>Report</li></ul></div>
-    <div class="wf-col"><div class="wf-num">04</div><div class="wf-q">When</div><ul><li>In 3-month</li><li>In 6-month</li><li>In 12-month</li></ul></div>
-    <div class="wf-col"><div class="wf-num">05</div><div class="wf-q">Where</div><ul><li>Style Guide</li><li>Content Templates</li><li>Asset Library</li></ul></div>
-    <div class="wf-col"><div class="wf-num">06</div><div class="wf-q">Why</div><ul><li>Brand Audit</li><li>Guidelines Compliance</li><li>Consistency</li></ul></div>
+  <div class="wf-tabs reveal">
+    <div class="wf-tab-buttons">
+      <button class="wf-tab-btn active" data-tab="strategy" type="button">Strategy &amp; Research</button>
+      <button class="wf-tab-btn" data-tab="ops" type="button">Brand Management &amp; Operations</button>
+      <button class="wf-tab-btn" data-tab="ecommerce" type="button">Ecommerce &amp; GMB</button>
+      <button class="wf-tab-btn" data-tab="copy" type="button">Copy &amp; Visual Production</button>
+      <button class="wf-tab-btn" data-tab="digital" type="button">Digital &amp; Influencer Marketing</button>
+    </div>
+
+    <div class="wf-tab-panel active" data-panel="strategy">
+      <div class="wf-quad">
+        <div class="wf-quad-item"><h4>Audit</h4><p>Where things stand today — the honest starting point.</p></div>
+        <div class="wf-quad-item"><h4>Strategy</h4><p>Business model vs. market fit — where the two line up, and where they don't.</p></div>
+        <div class="wf-quad-item"><h4>Core</h4><p>What you actually sell, stripped of the pitch.</p></div>
+        <div class="wf-quad-item"><h4>Blind Spots</h4><p>Where customer clarity is missing — the gaps you can't see from inside the business.</p></div>
+      </div>
+    </div>
+
+    <div class="wf-tab-panel" data-panel="ops">
+      <div class="workframe-strip">
+        <div class="wf-col"><div class="wf-num">01</div><div class="wf-q">What</div><ul><li>Budget</li><li>ROI</li><li>Market Fit</li><li>Tone</li></ul></div>
+        <div class="wf-col"><div class="wf-num">02</div><div class="wf-q">How</div><ul><li>Quality Control</li><li>Time Tracker</li><li>Accomplishment</li></ul></div>
+        <div class="wf-col"><div class="wf-num">03</div><div class="wf-q">Who</div><ul><li>Decision-maker</li><li>Approval</li><li>Report</li></ul></div>
+        <div class="wf-col"><div class="wf-num">04</div><div class="wf-q">When</div><ul><li>In 3-month</li><li>In 6-month</li><li>In 12-month</li></ul></div>
+        <div class="wf-col"><div class="wf-num">05</div><div class="wf-q">Where</div><ul><li>Style Guide</li><li>Content Templates</li><li>Asset Library</li></ul></div>
+        <div class="wf-col"><div class="wf-num">06</div><div class="wf-q">Why</div><ul><li>Brand Audit</li><li>Guidelines Compliance</li><li>Consistency</li></ul></div>
+      </div>
+    </div>
+
+    <div class="wf-tab-panel" data-panel="ecommerce">
+      <div class="wf-ux-grid">
+        <div class="wf-ux-col">
+          <div class="wf-q">UI</div>
+          <div class="wf-question">How to keep retention in the first 3–5 seconds?</div>
+          <ul><li>Visual Hierarchy</li><li>Typography</li><li>UI Patterns</li><li>Accessibility</li></ul>
+        </div>
+        <div class="wf-ux-col">
+          <div class="wf-q">UX</div>
+          <div class="wf-question">How to guide customers to the right page?</div>
+          <ul><li>Prototyping</li><li>Wireframes</li><li>Customer Journey &amp; Behavior</li></ul>
+        </div>
+        <div class="wf-ux-col">
+          <div class="wf-q">Product Design</div>
+          <div class="wf-question">How to fulfill what they actually need?</div>
+          <ul><li>Product Display</li><li>Product Outcomes</li></ul>
+        </div>
+      </div>
+      <div class="wf-neuro-row">
+        <div class="wf-neuro-box"><div class="wf-neuro-label">Neuro-Hook — UI</div><ul><li>Von Restorff Effect</li><li>Color Psychology</li><li>Eye-Tracking F-Pattern</li></ul></div>
+        <div class="wf-neuro-box"><div class="wf-neuro-label">Neuro-Hook — UX</div><ul><li>Paradox of Choice</li><li>Emotional Design</li><li>Decision Friction</li></ul></div>
+        <div class="wf-neuro-box"><div class="wf-neuro-label">Neuro-Hook — Product</div><ul><li>Scarcity</li><li>Loss Aversion</li><li>Curiosity Gap</li></ul></div>
+      </div>
+    </div>
+
+    <div class="wf-tab-panel" data-panel="copy">
+      <div class="wf-ux-grid">
+        <div class="wf-ux-col">
+          <div class="wf-q">Concept</div>
+          <div class="wf-question">How to turn a brief into a visual language?</div>
+          <ul><li>Moodboards</li><li>Reference Boards</li><li>Tone-of-Voice Brief</li><li>Concept Sketches</li></ul>
+        </div>
+        <div class="wf-ux-col">
+          <div class="wf-q">Production</div>
+          <div class="wf-question">How to keep every asset on-brand at scale?</div>
+          <ul><li>Shoot / Design Execution</li><li>Copywriting Drafts</li><li>Revision Rounds</li></ul>
+        </div>
+        <div class="wf-ux-col">
+          <div class="wf-q">Delivery</div>
+          <div class="wf-question">How to hand off something that's actually usable?</div>
+          <ul><li>Packaged Files</li><li>Usage Guidelines</li><li>Multi-Format Exports</li></ul>
+        </div>
+      </div>
+      <div class="wf-neuro-row">
+        <div class="wf-neuro-box"><div class="wf-neuro-label">Neuro-Hook — Concept</div><ul><li>Aesthetic-Usability Effect</li><li>Mood &amp; Priming</li><li>Framing Effect</li></ul></div>
+        <div class="wf-neuro-box"><div class="wf-neuro-label">Neuro-Hook — Production</div><ul><li>Mere-Exposure Effect</li><li>Consistency Principle</li><li>Cognitive Fluency</li></ul></div>
+        <div class="wf-neuro-box"><div class="wf-neuro-label">Neuro-Hook — Delivery</div><ul><li>Peak-End Rule</li><li>Perceived-Effort Heuristic</li><li>Trust Transfer</li></ul></div>
+      </div>
+    </div>
+
+    <div class="wf-tab-panel" data-panel="digital">
+      <div class="wf-ux-grid">
+        <div class="wf-ux-col">
+          <div class="wf-q">Reach</div>
+          <div class="wf-question">How far does the message actually travel?</div>
+          <ul><li>KOL / KOC Network</li><li>Geographic Coverage (APAC · US · AUS)</li><li>Platform Mix</li></ul>
+        </div>
+        <div class="wf-ux-col">
+          <div class="wf-q">Performance</div>
+          <div class="wf-question">How do we know it's actually working?</div>
+          <ul><li>ROAS Tracking</li><li>Platform Metrics</li><li>Campaign Reporting</li></ul>
+        </div>
+        <div class="wf-ux-col">
+          <div class="wf-q">Selection</div>
+          <div class="wf-question">How do we pick the right voice?</div>
+          <ul><li>Creator Vetting &amp; Fit</li><li>Audience Overlap Check</li><li>Content Rights</li></ul>
+        </div>
+      </div>
+      <div class="wf-neuro-row">
+        <div class="wf-neuro-box"><div class="wf-neuro-label">Neuro-Hook — Reach</div><ul><li>Mere-Exposure Effect</li><li>Network Effects</li><li>Availability Heuristic</li></ul></div>
+        <div class="wf-neuro-box"><div class="wf-neuro-label">Neuro-Hook — Performance</div><ul><li>Social Proof</li><li>Bandwagon Effect</li><li>Anchoring on Benchmarks</li></ul></div>
+        <div class="wf-neuro-box"><div class="wf-neuro-label">Neuro-Hook — Selection</div><ul><li>Parasocial Trust</li><li>Source Credibility</li><li>Halo Effect</li></ul></div>
+      </div>
+    </div>
+
+    <p class="wf-caption" id="wfCaption">Workframe: Strategy &amp; Research — full breakdown available in the detailed rate card</p>
   </div>
-  <p class="wf-caption">Workframe: Brand Management &amp; Operations — full breakdown available in the detailed rate card</p>
 </section>
 
 <section id="portfolio">
@@ -446,32 +615,55 @@
   <h2 class="section-title reveal">Real project scopes — not just a list of skills.</h2>
 
   <div class="portfolio-grid">
-    <div class="project-card reveal">
-      <div class="project-thumb"><span>Case Study 01</span></div>
-      <div class="project-body"><div class="tag">Brand Management</div><h4>Project Name #1</h4><p>Short description: context, your role, and the results achieved.</p></div>
-    </div>
-    <div class="project-card reveal">
-      <div class="project-thumb"><span>Case Study 02</span></div>
-      <div class="project-body"><div class="tag">Digital &amp; Influencer</div><h4>Project Name #2</h4><p>Short description: context, your role, and the results achieved.</p></div>
-    </div>
-    <div class="project-card reveal">
-      <div class="project-thumb"><span>Case Study 03</span></div>
-      <div class="project-body"><div class="tag">Ecommerce &amp; GMB</div><h4>Project Name #3</h4><p>Short description: context, your role, and the results achieved.</p></div>
+    <button class="project-card has-photo reveal" type="button" data-case="gyro">
+      <div class="project-thumb"><img src="portfolio/gyro-republic.jpg" alt="Gyro Republic brand system"></div>
+      <div class="project-body"><div class="tag">F&amp;B / Brand &amp; Marketing Strategy</div><h4>Gyro Republic — Growth &amp; Brand System</h4><p>A 7-store US Halal Mediterranean chain needed one system tying pricing, content, and CRM together — built around a food-forward identity and generation-specific hooks.</p></div>
+    </button>
+    <button class="project-card has-photo reveal" type="button" data-case="starcafe">
+      <div class="project-thumb"><img src="portfolio/starcafe.jpg" alt="StarCafe brand identity system"></div>
+      <div class="project-body"><div class="tag">F&amp;B / Brand Strategy &amp; System Ownership</div><h4>StarCafe — Airport Brand Identity System</h4><p>A Vietnamese airport cafe with inconsistent identity and product categories untouched since 2013 — rebuilt into a bold, instantly local, ready-to-license brand system.</p></div>
+    </button>
+    <button class="project-card has-photo reveal" type="button" data-case="bigbowl">
+      <div class="project-thumb"><img src="portfolio/bigbowl.jpg" alt="BigBowl product and LTO development"></div>
+      <div class="project-body"><div class="tag">F&amp;B / Product Storytelling &amp; LTO Strategy</div><h4>BigBowl — Hero Product &amp; Value Perception</h4><p>Premium airport phở pricing wasn't backed by clear product cues — solved by anchoring the menu on a Wagyu Beef Phở hero product and value-led combo offers.</p></div>
+    </button>
+    <button class="project-card has-photo reveal" type="button" data-case="saladstop">
+      <div class="project-thumb"><img src="portfolio/saladstop.jpg" alt="SaladStop Vietnam content and social strategy"></div>
+      <div class="project-body"><div class="tag">F&amp;B / Localization &amp; Content Strategy</div><h4>SaladStop! Vietnam — Local Relevance at Scale</h4><p>A global healthy-food identity that wasn't translating locally — localized across product, photography and social to drive +18% YoY growth in 2022.</p></div>
+    </button>
+  </div>
+  <p class="placeholder-note reveal">Click any case study to see the full approach.</p>
+</section>
+
+<div class="lightbox" id="caseLightbox">
+  <div class="lightbox-backdrop"></div>
+  <div class="lightbox-panel">
+    <button class="lightbox-close" type="button" id="lightboxClose" aria-label="Close">&times;</button>
+    <img class="lightbox-img" id="lbImg" src="" alt="">
+    <div class="lightbox-body">
+      <div class="tag" id="lbTag"></div>
+      <h3 id="lbTitle"></h3>
+      <p class="lead" id="lbLead"></p>
+      <div class="lb-label">Approach</div>
+      <ul id="lbApproach"></ul>
+      <div class="lb-outcome" id="lbOutcome"></div>
+      <p class="lb-note" id="lbNote"></p>
     </div>
   </div>
-  <p class="placeholder-note reveal">* These 3 tiles are placeholders — send real photos at 1200×600px (2:1 ratio, min. 800×400px) and I'll drop them right in.</p>
-</section>
+</div>
 
 <section id="rates">
   <div class="section-label reveal"><div class="dot">C</div><span>Rate Card</span></div>
   <h2 class="section-title reveal" id="ratesTitle">Pick the working arrangement that fits your project.</h2>
   <div class="rate-grid">
-    <div class="rate-card"><div class="rate-label">By Project</div><div class="rate-num">$8.99</div></div>
-    <div class="rate-card"><div class="rate-label">Full Time</div><div class="rate-num">$11.99</div></div>
-    <div class="rate-card"><div class="rate-label">Part Time</div><div class="rate-num">$9.99</div></div>
-    <div class="rate-card"><div class="rate-label">Urgency</div><div class="rate-num" style="font-size:20px; padding-top:8px;">By scope</div></div>
+    <div class="rate-card"><div class="rate-label">01 · Strategy &amp; Research</div><div class="rate-num">$8.99<span class="rate-unit">/hr</span></div><div class="rate-turnaround">24-hour quick-win turnaround</div></div>
+    <div class="rate-card"><div class="rate-label">02 · Brand Identity &amp; Guidelines</div><div class="rate-num">$11.99<span class="rate-unit">/hr</span></div><div class="rate-turnaround">96-hour flagship turnaround</div></div>
+    <div class="rate-card"><div class="rate-label">03 · Brand Mgmt &amp; Operations</div><div class="rate-num">$7.99<span class="rate-unit">/hr</span></div><div class="rate-turnaround">3.5 hrs/day, 7 days/week</div></div>
+    <div class="rate-card"><div class="rate-label">04 · Copy &amp; Visual Production</div><div class="rate-num">$42.99<span class="rate-unit">/artwork</span></div><div class="rate-turnaround">3.5-hour production turnaround</div></div>
+    <div class="rate-card"><div class="rate-label">05 · Ecommerce &amp; GMB</div><div class="rate-num" style="font-size:21px; padding-top:6px;">Custom quote</div><div class="rate-turnaround">Project-based — after a short 1:1 consult</div></div>
+    <div class="rate-card"><div class="rate-label">06 · Digital &amp; Influencer</div><div class="rate-num" style="font-size:21px; padding-top:6px;">Custom quote</div><div class="rate-turnaround">Project-based — after a short 1:1 consult</div></div>
   </div>
-  <p class="rate-note reveal">* Figures shown are pulled from the current rate card — please confirm final pricing before this goes public.</p>
+  <p class="rate-note reveal">* Rates are pulled directly from the studio rate card. Ecommerce &amp; GMB and Digital &amp; Influencer Marketing are scoped after a short discovery call rather than billed hourly.</p>
 </section>
 
 <section id="contact">
@@ -582,6 +774,120 @@
     entries.forEach(e=>{ if(e.isIntersecting){ runFitSequence(); fitObserver.disconnect(); } });
   }, {threshold:.4});
   fitObserver.observe(fitSection);
+
+  // Workframe tab switching
+  const wfCaptions = {
+    strategy: 'Workframe: Strategy &amp; Research — full breakdown available in the detailed rate card',
+    ops: 'Workframe: Brand Management &amp; Operations — full breakdown available in the detailed rate card',
+    ecommerce: 'Workframe: Ecommerce &amp; GMB — full breakdown available in the detailed rate card',
+    copy: 'Workframe: Copy &amp; Visual Production — full breakdown available in the detailed rate card',
+    digital: 'Workframe: Digital &amp; Influencer Marketing — full breakdown available in the detailed rate card'
+  };
+  const wfCaptionEl = document.getElementById('wfCaption');
+  document.querySelectorAll('.wf-tab-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const tab = btn.dataset.tab;
+      document.querySelectorAll('.wf-tab-btn').forEach(b=> b.classList.toggle('active', b===btn));
+      document.querySelectorAll('.wf-tab-panel').forEach(p=> p.classList.toggle('active', p.dataset.panel===tab));
+      if (wfCaptionEl) wfCaptionEl.innerHTML = wfCaptions[tab] || '';
+    });
+  });
+
+  // Portfolio case-study lightbox
+  const caseData = {
+    gyro: {
+      img: 'portfolio/gyro-republic.jpg',
+      tag: 'F&amp;B / Brand &amp; Marketing Strategy',
+      title: 'Gyro Republic — Growth &amp; Brand System',
+      lead: 'A 7-store US Halal Mediterranean chain running fast, but without a system tying pricing, content, and CRM together — so every channel effort stayed one-off instead of compounding.',
+      approach: [
+        'Diagnosed 6 gaps blocking channel efforts from compounding: brand consistency, pricing strategy, content strategy, product display, CRM, and PR.',
+        'Built a 3-pillar brand system around a food-forward, protein-first visual identity.',
+        'Mapped generation-specific hooks: Gen Z (digital-first), Millennial (O2O-to-D2C), Gen X (traditional, trust-led).',
+        'Built a full awareness-to-retention funnel and a phased 90-day rollout tied to a % of revenue marketing budget.'
+      ],
+      outcome: 'Strategy proposal — precise financial targets kept confidential per client agreement.',
+      note: ''
+    },
+    starcafe: {
+      img: 'portfolio/starcafe.jpg',
+      tag: 'F&amp;B / Brand Strategy &amp; System Ownership',
+      title: 'StarCafe — Airport Brand Identity System',
+      lead: 'A Vietnamese airport cafe with limited brand recognition, an inconsistent identity, and product categories that hadn\'t been refreshed since 2013 — inside high-transit spaces where visibility and product clarity decide the sale in seconds.',
+      approach: [
+        'Built a full Brand Identity System from the ground up: market research, brand character, look, tone and guidelines.',
+        'Anchored the concept in "As Bold As The Vietnamese," carried across logo lockups, uniforms, packaging and cup design.',
+        'Led New Product Development end-to-end — Vietnamese Baguette, LTO Combo, and Matcha Collection — from shopper input through launch rollout.',
+        'Directed the Social Media System: content planning, copywriting briefs, and output quality control.'
+      ],
+      outcome: 'Reusable identity and campaign system now carried across StarCafe\'s airport touchpoints.',
+      note: 'Brand strategy & system ownership — led end-to-end as Marketing Supervisor, Autogrill VFS.'
+    },
+    bigbowl: {
+      img: 'portfolio/bigbowl.jpg',
+      tag: 'F&amp;B / Product Storytelling &amp; LTO Strategy',
+      title: 'BigBowl — Hero Product &amp; Value Perception',
+      lead: 'An authentic phở concept since 2013, but premium airport pricing wasn\'t backed by clear product or quality cues — and a genuinely strong hero product, Wagyu Beef Phở, wasn\'t being used to build distinction.',
+      approach: [
+        'Diagnosed four gaps: category familiarity, value perception, fragmented touchpoints, and an underused hero product.',
+        'Repositioned Wagyu Beef Phở as the product anchor, then built value-led combo offers around it.',
+        'Ran the full Market Signal → Strategic Decision → LTO Development → Campaign Rollout pipeline for seasonal offers.',
+        'Directed digital ordering, social channels, website/SEO and physical brand presence as one connected system.'
+      ],
+      outcome: 'Seasonal product-combo platforms and campaign KV systems now adaptable across menus, airport media, and in-store touchpoints.',
+      note: 'Brand strategy & system ownership — led end-to-end as Marketing Supervisor, Autogrill VFS.'
+    },
+    saladstop: {
+      img: 'portfolio/saladstop.jpg',
+      tag: 'F&amp;B / Localization &amp; Content Strategy',
+      title: 'SaladStop! Vietnam — Local Relevance at Scale',
+      lead: 'SaladStop!\'s global healthy-food identity wasn\'t translating locally — Vietnamese customers needed clearer relevance, not just a "healthy food" label, across three Ho Chi Minh City stores.',
+      approach: [
+        'Diagnosed the gap: limited category awareness, premium price perception, a narrow initial audience, and low local relevance.',
+        'Ran market education, market expansion, and product localization as the three core strategic actions.',
+        'Localized a Korean-inspired menu within SaladStop!\'s wellness positioning for the District 7, Korean-community store.',
+        'Directed photography, copywriting and social content production across the 2022–2023 campaign calendar.'
+      ],
+      outcome: '+18% YoY growth in 2022, with a stronger health-lifestyle association across all three stores.',
+      note: 'Brand & marketing operations — led end-to-end as Marketing Supervisor, Autogrill VFS × MFT Group JV.'
+    }
+  };
+
+  const lightbox = document.getElementById('caseLightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbTag = document.getElementById('lbTag');
+  const lbTitle = document.getElementById('lbTitle');
+  const lbLead = document.getElementById('lbLead');
+  const lbApproach = document.getElementById('lbApproach');
+  const lbOutcome = document.getElementById('lbOutcome');
+  const lbNote = document.getElementById('lbNote');
+
+  function openCase(id){
+    const d = caseData[id];
+    if (!d || !lightbox) return;
+    lbImg.src = d.img; lbImg.alt = d.title;
+    lbTag.innerHTML = d.tag;
+    lbTitle.innerHTML = d.title;
+    lbLead.textContent = d.lead;
+    lbApproach.innerHTML = d.approach.map(a=>`<li>${a}</li>`).join('');
+    lbOutcome.textContent = d.outcome;
+    lbNote.textContent = d.note || '';
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCase(){
+    if (!lightbox) return;
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.project-card[data-case]').forEach(card=>{
+    card.addEventListener('click', ()=> openCase(card.dataset.case));
+  });
+  const lightboxCloseBtn = document.getElementById('lightboxClose');
+  if (lightboxCloseBtn) lightboxCloseBtn.addEventListener('click', closeCase);
+  const lightboxBackdrop = lightbox ? lightbox.querySelector('.lightbox-backdrop') : null;
+  if (lightboxBackdrop) lightboxBackdrop.addEventListener('click', closeCase);
+  document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape') closeCase(); });
 </script>
 
 </body>
