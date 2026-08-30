@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Babicone — Brand Chaos Fixer</title>
+<style>
+  :root{
+    --pink:#eb359c;
+    --pink-deep:#c81f80;
+    --cyan:#8dfbff;
+    --maroon:#53002f;
+    --maroon-deep:#3a0022;
+    --cream:#fcf2e0;
+    --white:#ffffff;
+    --ink:#13100d;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    background:var(--pink);
+    color:var(--white);
+    overflow-x:hidden;
+  }
+  a{color:inherit; text-decoration:none;}
+
+  /* ---------- Nav ---------- */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:20px 48px;
+    background:rgba(235,53,156,0.85);
+    backdrop-filter:blur(8px);
+    transition:background .3s ease;
+  }
+  nav .logo{font-weight:800; font-size:20px; letter-spacing:1px;}
+  nav ul{display:flex; gap:32px; list-style:none;}
+  nav ul li a{font-size:13px; font-weight:700; opacity:.85; transition:opacity .2s; letter-spacing:.5px;}
+  nav ul li a:hover{opacity:1; color:var(--cyan);}
+
+  /* flip CTA */
+  .cta-flip{position:relative; width:212px; height:40px; perspective:800px; display:inline-block;}
+  .cta-flip .flip-inner{position:absolute; inset:0; transform-style:preserve-3d; transition:transform .7s cubic-bezier(.5,.2,.2,1);}
+  .cta-flip.flipped .flip-inner{transform:rotateY(180deg);}
+  .cta-flip .flip-face{
+    position:absolute; inset:0; backface-visibility:hidden; border-radius:999px;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    font-weight:700; font-size:12.5px; letter-spacing:.3px;
+    background:var(--cyan); color:var(--maroon-deep);
+  }
+  .cta-flip .flip-face b{
+    display:inline-flex; align-items:center; justify-content:center; flex:none;
+    width:18px; height:18px; border-radius:50%; background:var(--maroon-deep); color:var(--cyan);
+    font-size:11px;
+  }
+  .cta-flip .flip-back{transform:rotateY(180deg);}
+
+  /* ---------- Hero ---------- */
+  header.hero{
+    min-height:100vh;
+    display:flex; flex-direction:column; justify-content:center;
+    position:relative;
+    padding:0 48px;
+    overflow:hidden;
+  }
+  .blob{position:absolute; border-radius:50%; filter:blur(60px); opacity:.55; animation:float 12s ease-in-out infinite;}
+  .blob1{width:420px; height:420px; background:var(--cyan); top:-120px; right:-100px; animation-delay:0s;}
+  .blob2{width:300px; height:300px; background:var(--maroon); bottom:-80px; left:-60px; animation-delay:3s;}
+  @keyframes float{0%,100%{transform:translateY(0) translateX(0);} 50%{transform:translateY(-30px) translateX(20px);}}
+
+  .hero-tag{
+    display:inline-block; align-self:flex-start;
+    background:var(--maroon); color:var(--cyan);
+    font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+    padding:8px 16px; border-radius:999px; margin-bottom:24px;
+    opacity:0; animation:riseIn .7s ease forwards; animation-delay:.1s;
+  }
+  .hero h1{
+    font-size:clamp(48px, 9vw, 108px);
+    font-weight:900; line-height:0.95; letter-spacing:-2px;
+    opacity:0; animation:riseIn .8s ease forwards; animation-delay:.25s;
+  }
+  .hero h1 .fit-word{color:var(--maroon); -webkit-text-stroke:2px var(--cyan);}
+  .hero h1 .hero-quote{color:var(--maroon); opacity:.55; font-size:.55em; vertical-align:.12em;}
+  .hero-punch{
+    max-width:640px; margin-top:20px; font-size:clamp(20px,3vw,32px); font-weight:800; line-height:1.3; opacity:0;
+    animation:riseIn .8s ease forwards; animation-delay:.42s;
+  }
+  .hero-punch .f-letter{color:var(--maroon); -webkit-text-stroke:2px var(--cyan); font-weight:900;}
+  .hero-actions{margin-top:36px; display:flex; gap:16px; opacity:0; animation:riseIn .8s ease forwards; animation-delay:.6s;}
+  .btn-primary{
+    background:var(--maroon); color:var(--cyan); font-weight:700; font-size:15px;
+    padding:16px 32px; border-radius:999px; display:inline-flex; align-items:center; gap:8px;
+    transition:transform .25s ease, box-shadow .25s ease;
+    box-shadow:0 8px 24px rgba(83,0,47,.35);
+  }
+  .btn-primary:hover{transform:translateY(-3px); box-shadow:0 14px 28px rgba(83,0,47,.45);}
+  .btn-ghost{
+    border:2px solid var(--white); color:var(--white); font-weight:700; font-size:15px;
+    padding:14px 30px; border-radius:999px; transition:.25s ease;
+  }
+  .btn-ghost:hover{background:var(--white); color:var(--pink-deep);}
+  @keyframes riseIn{from{opacity:0; transform:translateY(24px);} to{opacity:1; transform:translateY(0);}}
+
+  .scroll-cue{
+    position:absolute; bottom:36px; left:48px; font-size:12px; letter-spacing:2px; font-weight:700;
+    display:flex; align-items:center; gap:10px; opacity:.8;
+  }
+  .scroll-cue .line{width:40px; height:1px; background:var(--white); position:relative; overflow:hidden;}
+  .scroll-cue .line::after{content:''; position:absolute; left:-40px; top:0; width:40px; height:1px; background:var(--cyan); animation:slide 1.8s ease-in-out infinite;}
+  @keyframes slide{50%{left:40px;} 100%{left:80px;}}
+
+  /* ---------- Section shell ---------- */
+  section{padding:120px 48px;}
+  .section-label{display:flex; align-items:center; gap:14px; margin-bottom:16px;}
+  .section-label .dot{width:44px; height:44px; border-radius:50%; background:var(--maroon); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:18px;}
+  .section-label span{font-weight:800; font-size:14px; letter-spacing:2px; text-transform:uppercase; opacity:.85;}
+  .section-title{font-size:clamp(32px,5vw,56px); font-weight:900; max-width:720px; line-height:1.05; margin-bottom:56px;}
+  .reveal{opacity:0; transform:translateY(32px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------- FIT story ---------- */
+  #fit-story{padding-top:40px; padding-bottom:100px; text-align:center;}
+  .fix-ticker{
+    position:relative; height:52px; max-width:720px; margin:0 auto;
+    transition:opacity .5s ease, transform .5s ease, height .5s ease, margin .5s ease;
+  }
+  .fix-ticker.collapsed{opacity:.4; transform:scale(.72); height:30px; margin-bottom:-10px;}
+  .fix-line{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-size:clamp(18px,2.6vw,26px); font-weight:600; font-style:italic; opacity:0;
+    transition:opacity .35s ease, transform .35s ease; transform:translateY(6px);
+  }
+  .fix-line.active{opacity:1; transform:translateY(0);}
+  .fit-lead{
+    max-width:600px; margin:44px auto 0; font-size:clamp(17px,2vw,20px); font-weight:600; opacity:0;
+    transform:translateY(14px); transition:opacity .6s ease, transform .6s ease;
+  }
+  .fit-lead.show{opacity:.85; transform:translateY(0);}
+
+  .fit-giant-wrap{
+    margin-top:22px; opacity:0; transform:scale(.82);
+    transition:opacity .7s cubic-bezier(.2,.8,.2,1), transform .7s cubic-bezier(.2,.8,.2,1);
+  }
+  .fit-giant-wrap.show{opacity:1; transform:scale(1);}
+  .fit-giant{display:flex; align-items:center; justify-content:center; gap:8px;}
+  .quote-mark{font-size:clamp(40px,7vw,84px); font-weight:900; color:var(--maroon); opacity:.5; line-height:1; align-self:flex-start;}
+  .fit-word-giant{font-size:clamp(76px,15vw,180px); font-weight:900; color:var(--maroon); letter-spacing:-3px; line-height:.9;}
+  .fit-sub{margin-top:10px; font-size:clamp(16px,2vw,20px); font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--cyan);}
+
+  .fit-arrows{
+    list-style:none; margin:60px auto 0; max-width:900px; padding:0;
+    display:flex; flex-direction:row; flex-wrap:wrap; align-items:center; justify-content:center; gap:10px;
+  }
+  .fit-connector{
+    color:var(--cyan); font-weight:900; font-size:22px; opacity:0; transition:opacity .4s ease .1s; flex:none;
+  }
+  .fit-connector.show{opacity:1;}
+  .fit-card{
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+    width:190px; padding:24px 18px; border-radius:20px; border:2px solid var(--cyan);
+    opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease;
+  }
+  .fit-card.show{opacity:1; transform:translateY(0);}
+  .fit-card-badge{font-size:30px; font-weight:900; letter-spacing:.5px; line-height:1;}
+  .fit-card-label{font-size:14.5px; font-weight:700; text-align:center; line-height:1.35;}
+
+  .fit-card.v-a{background:radial-gradient(circle at 32% 22%, #6b0038, #2c0018 78%);}
+  .fit-card.v-a .fit-card-badge{color:var(--cyan);}
+  .fit-card.v-a .fit-card-label{color:var(--white);}
+
+  .fit-card.v-b{background:linear-gradient(140deg, #f1ecf7, #9f8fdc);}
+  .fit-card.v-b .fit-card-badge{color:var(--maroon-deep);}
+  .fit-card.v-b .fit-card-label{color:var(--maroon-deep);}
+
+  .fit-card.v-c{background:linear-gradient(160deg, #1c1c1f, #000);}
+  .fit-card.v-c .fit-card-badge{color:var(--cyan);}
+  .fit-card.v-c .fit-card-label{color:var(--white);}
+
+  @media (max-width:640px){
+    .fit-arrows{flex-direction:column;}
+    .fit-connector{transform:rotate(90deg);}
+    .fit-card{width:230px;}
+  }
+
+  /* ---------- Who I work with ---------- */
+  #who{text-align:center; padding-top:0; padding-bottom:100px;}
+  .who-eyebrow{font-size:13px; font-weight:800; letter-spacing:2px; text-transform:uppercase; opacity:.7; margin-bottom:24px;}
+  .chip-row{display:flex; flex-wrap:wrap; justify-content:center; gap:12px; max-width:760px; margin:0 auto 40px;}
+  .chip{
+    background:var(--maroon); color:var(--white); font-weight:700; font-size:13px; letter-spacing:.5px;
+    padding:10px 20px; border-radius:999px; transition:transform .25s ease, background .25s ease;
+  }
+  .chip:hover{transform:translateY(-3px); background:var(--maroon-deep);}
+  .chip.alt{background:rgba(255,255,255,.14);}
+  .signature-row{display:flex; justify-content:center; gap:14px; margin-top:8px;}
+  .sig-pill{
+    border:2px solid var(--cyan); color:var(--cyan); font-weight:800; font-size:13px; letter-spacing:1px;
+    padding:9px 20px; border-radius:999px; text-transform:uppercase;
+  }
+
+  /* ---------- Services ---------- */
+  #services{background:var(--pink);}
+  .services-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  .service-card{background:var(--maroon); border-radius:18px; padding:28px 24px; min-height:190px; position:relative; overflow:hidden; transition:transform .3s ease, background .3s ease;}
+  .service-card:hover{transform:translateY(-8px); background:var(--maroon-deep);}
+  .service-card .num{font-size:13px; font-weight:800; color:var(--cyan); opacity:.7;}
+  .service-card h3{font-size:20px; font-weight:800; margin:14px 0 10px; line-height:1.25;}
+  .service-card p{font-size:13.5px; line-height:1.6; opacity:.8;}
+  .service-card::after{content:''; position:absolute; width:120px; height:120px; border-radius:50%; background:var(--cyan); opacity:.08; right:-40px; bottom:-40px; transition:transform .4s ease;}
+  .service-card:hover::after{transform:scale(1.4);}
+
+  .workframe-strip{margin-top:64px; background:var(--maroon-deep); border-radius:24px; padding:40px; display:grid; grid-template-columns:repeat(6,1fr); gap:0;}
+  .wf-col{padding:0 16px; border-left:1px solid rgba(255,255,255,.12);}
+  .wf-col:first-child{border-left:none;}
+  .wf-col .wf-num{font-size:30px; font-weight:900; color:var(--white); opacity:.9;}
+  .wf-col .wf-q{color:var(--cyan); font-weight:800; font-size:14px; text-transform:uppercase; margin:6px 0 12px;}
+  .wf-col ul{list-style:none; font-size:11.5px; line-height:2; opacity:.75;}
+  .wf-caption{margin-top:20px; font-size:12px; opacity:.55; font-style:italic; text-align:center;}
+
+  /* ---------- Portfolio ---------- */
+  #portfolio{background:var(--maroon-deep);}
+  .portfolio-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  .project-card{border-radius:20px; overflow:hidden; background:var(--maroon); transition:transform .35s ease; cursor:pointer;}
+  .project-card:hover{transform:translateY(-10px);}
+  .project-thumb{
+    height:220px; display:flex; align-items:center; justify-content:center;
+    font-weight:900; font-size:15px; letter-spacing:1px; text-transform:uppercase;
+    color:var(--maroon-deep); background:linear-gradient(135deg, var(--cyan), var(--pink) 130%);
+    position:relative; overflow:hidden;
+  }
+  .project-thumb span{position:relative; z-index:2; background:var(--white); padding:6px 14px; border-radius:999px; font-size:11px;}
+  .project-thumb::before{content:''; position:absolute; inset:0; background:repeating-linear-gradient(45deg, rgba(255,255,255,.15) 0 2px, transparent 2px 14px);}
+  .project-body{padding:22px 22px 26px;}
+  .project-body .tag{font-size:11px; font-weight:800; letter-spacing:1.5px; color:var(--cyan); text-transform:uppercase;}
+  .project-body h4{font-size:19px; font-weight:800; margin:10px 0 8px;}
+  .project-body p{font-size:13px; opacity:.75; line-height:1.6;}
+  .placeholder-note{margin-top:28px; font-size:12.5px; opacity:.6; text-align:center;}
+
+  /* ---------- Rate card teaser ---------- */
+  #rates{background:var(--pink);}
+  .rate-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px;}
+  .rate-card{background:var(--maroon); border-radius:18px; padding:26px 20px; text-align:center; transition:transform .3s ease;}
+  .rate-card:hover{transform:translateY(-6px);}
+  .rate-card .rate-label{font-size:12px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; opacity:.8;}
+  .rate-card .rate-num{font-size:34px; font-weight:900; color:var(--cyan); margin-top:12px;}
+  .rate-note{margin-top:24px; font-size:12.5px; opacity:.65; text-align:center;}
+
+  /* ---------- Contact CTA ---------- */
+  #contact{background:var(--maroon-deep); text-align:center; padding:140px 48px; position:relative; overflow:hidden;}
+  #contact h2{font-size:clamp(34px,6vw,64px); font-weight:900; max-width:760px; margin:0 auto 24px; line-height:1.1;}
+  #contact p{opacity:.75; max-width:480px; margin:0 auto 40px; font-size:16px;}
+  .btn-primary.big{padding:20px 44px; font-size:17px;}
+  .contact-ring{position:absolute; width:520px; height:520px; border:1px solid rgba(141,251,255,.25); border-radius:50%; top:50%; left:50%; transform:translate(-50%,-50%); animation:spin 30s linear infinite;}
+  .contact-ring.ring2{width:680px; height:680px; border-color:rgba(235,53,156,.35); animation-duration:45s; animation-direction:reverse;}
+  @keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg);}}
+
+  footer{background:var(--maroon-deep); text-align:center; padding:28px; font-size:12px; opacity:.5; border-top:1px solid rgba(255,255,255,.08);}
+
+  @media (max-width:900px){
+    .services-grid, .portfolio-grid{grid-template-columns:repeat(2,1fr);}
+    .workframe-strip{grid-template-columns:repeat(3,1fr); row-gap:24px;}
+    .wf-col{border-left:none; border-top:1px solid rgba(255,255,255,.12); padding-top:16px;}
+    .wf-col:nth-child(3n+1){border-left:none;}
+    .rate-grid{grid-template-columns:repeat(2,1fr);}
+    nav ul{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Babicone</div>
+  <ul>
+    <li><a href="#services">SERVICES</a></li>
+    <li><a href="#portfolio">CREDENTIALS</a></li>
+    <li><a href="#rates">MY RATECARD</a></li>
+  </ul>
+  <a href="#contact" class="cta-flip" id="ctaFlip">
+    <span class="flip-inner">
+      <span class="flip-face flip-front"><b>1</b> FREE CONSULTANT</span>
+      <span class="flip-face flip-back"><b>2</b> I NEED QUOTATION</span>
+    </span>
+  </a>
+</nav>
+
+<header class="hero">
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="hero-tag">Brand Chaos Fixer</div>
+  <h1>BUILD<br>THE <span class="hero-quote">"</span><span class="fit-word">FIT</span><span class="hero-quote">"</span>.</h1>
+  <p class="hero-punch">Every business problem starts with <span class="f-letter">F</span>.</p>
+  <div class="hero-actions">
+    <a href="#contact" class="btn-primary">Get a Project Quote →</a>
+    <a href="#services" class="btn-ghost">View Services</a>
+  </div>
+  <div class="scroll-cue"><div class="line"></div>SCROLL</div>
+</header>
+
+<section id="fit-story">
+  <div class="fix-ticker">
+    <span class="fix-line">"I need to fix my marketing team."</span>
+    <span class="fix-line">"I need to fix my workflow."</span>
+    <span class="fix-line">"I need to fix the deadline."</span>
+    <span class="fix-line">"I need to fix the brief."</span>
+    <span class="fix-line">"I need to fix the content."</span>
+    <span class="fix-line">"I need to fix everything…"</span>
+  </div>
+  <p class="fit-lead">You see? You can't fix everything you see in your business as a problem.</p>
+
+  <div class="fit-giant-wrap">
+    <div class="fit-giant"><span class="quote-mark">"</span><span class="fit-word-giant">FIT</span><span class="quote-mark">"</span></div>
+    <p class="fit-sub">is all you need.</p>
+  </div>
+
+  <ul class="fit-arrows">
+    <li class="fit-card v-a">
+      <span class="fit-card-badge">FIT</span>
+      <span class="fit-card-label">the market size</span>
+    </li>
+    <li class="fit-connector">→</li>
+    <li class="fit-card v-b">
+      <span class="fit-card-badge">FIT</span>
+      <span class="fit-card-label">the customers' needs</span>
+    </li>
+    <li class="fit-connector">→</li>
+    <li class="fit-card v-c">
+      <span class="fit-card-badge">FIT</span>
+      <span class="fit-card-label">the scale of your business</span>
+    </li>
+  </ul>
+</section>
+
+<section id="who">
+  <div class="who-eyebrow">Who I Work With</div>
+  <div class="chip-row">
+    <span class="chip">Startup</span>
+    <span class="chip">SMEs</span>
+    <span class="chip">Corporation</span>
+    <span class="chip">Manufactory</span>
+  </div>
+  <div class="chip-row">
+    <span class="chip alt">Wellness</span>
+    <span class="chip alt">F&amp;B</span>
+    <span class="chip alt">Education</span>
+    <span class="chip alt">Travel</span>
+    <span class="chip alt">Real Estate</span>
+    <span class="chip alt">Energy</span>
+  </div>
+  <div class="signature-row">
+    <span class="sig-pill">Build The Fit</span>
+    <span class="sig-pill">Fix To Fit</span>
+  </div>
+</section>
+
+<section id="services">
+  <div class="section-label reveal"><div class="dot">A</div><span>Services</span></div>
+  <h2 class="section-title reveal">Six service lines, run as one system — not six separate jobs.</h2>
+
+  <div class="services-grid">
+    <div class="service-card reveal"><div class="num">01</div><h3>Strategy &amp; Research</h3><p>Market audits and brand positioning to find the fit before any campaign begins.</p></div>
+    <div class="service-card reveal"><div class="num">02</div><h3>Brand Identity &amp; Guidelines</h3><p>Naming, tone of voice, and a visual identity system — built once, used consistently.</p></div>
+    <div class="service-card reveal"><div class="num">03</div><h3>Brand Management &amp; Operations</h3><p>Running multi-campaign timelines, budgets, and weekly quality control.</p></div>
+    <div class="service-card reveal"><div class="num">04</div><h3>Copy &amp; Visual Production</h3><p>Not just words and images — ideas rendered into a visual language of their own.</p></div>
+    <div class="service-card reveal"><div class="num">05</div><h3>Ecommerce &amp; GMB</h3><p>Optimizing the buying journey: interface, customer flow, and on-platform product design.</p></div>
+    <div class="service-card reveal"><div class="num">06</div><h3>Digital &amp; Influencer Marketing</h3><p>KOL networks, campaign data, and growth you can actually measure.</p></div>
+  </div>
+
+  <div class="workframe-strip reveal">
+    <div class="wf-col"><div class="wf-num">01</div><div class="wf-q">What</div><ul><li>Budget</li><li>ROI</li><li>Market Fit</li><li>Tone</li></ul></div>
+    <div class="wf-col"><div class="wf-num">02</div><div class="wf-q">How</div><ul><li>Quality Control</li><li>Time Tracker</li><li>Accomplishment</li></ul></div>
+    <div class="wf-col"><div class="wf-num">03</div><div class="wf-q">Who</div><ul><li>Decision-maker</li><li>Approval</li><li>Report</li></ul></div>
+    <div class="wf-col"><div class="wf-num">04</div><div class="wf-q">When</div><ul><li>In 3-month</li><li>In 6-month</li><li>In 12-month</li></ul></div>
+    <div class="wf-col"><div class="wf-num">05</div><div class="wf-q">Where</div><ul><li>Style Guide</li><li>Content Templates</li><li>Asset Library</li></ul></div>
+    <div class="wf-col"><div class="wf-num">06</div><div class="wf-q">Why</div><ul><li>Brand Audit</li><li>Guidelines Compliance</li><li>Consistency</li></ul></div>
+  </div>
+  <p class="wf-caption">Workframe: Brand Management &amp; Operations — full breakdown available in the detailed rate card</p>
+</section>
+
+<section id="portfolio">
+  <div class="section-label reveal"><div class="dot">B</div><span>Portfolio</span></div>
+  <h2 class="section-title reveal">Real project scopes — not just a list of skills.</h2>
+
+  <div class="portfolio-grid">
+    <div class="project-card reveal">
+      <div class="project-thumb"><span>Case Study 01</span></div>
+      <div class="project-body"><div class="tag">Brand Management</div><h4>Project Name #1</h4><p>Short description: context, your role, and the results achieved.</p></div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb"><span>Case Study 02</span></div>
+      <div class="project-body"><div class="tag">Digital &amp; Influencer</div><h4>Project Name #2</h4><p>Short description: context, your role, and the results achieved.</p></div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb"><span>Case Study 03</span></div>
+      <div class="project-body"><div class="tag">Ecommerce &amp; GMB</div><h4>Project Name #3</h4><p>Short description: context, your role, and the results achieved.</p></div>
+    </div>
+  </div>
+  <p class="placeholder-note reveal">* These 3 tiles are placeholders — send real photos at 1200×600px (2:1 ratio, min. 800×400px) and I'll drop them right in.</p>
+</section>
+
+<section id="rates">
+  <div class="section-label reveal"><div class="dot">C</div><span>Rate Card</span></div>
+  <h2 class="section-title reveal">Pick the working arrangement that fits your project.</h2>
+  <div class="rate-grid">
+    <div class="rate-card reveal"><div class="rate-label">By Project</div><div class="rate-num">$8.99</div></div>
+    <div class="rate-card reveal"><div class="rate-label">Full Time</div><div class="rate-num">$11.99</div></div>
+    <div class="rate-card reveal"><div class="rate-label">Part Time</div><div class="rate-num">$9.99</div></div>
+    <div class="rate-card reveal"><div class="rate-label">Urgency</div><div class="rate-num" style="font-size:20px; padding-top:8px;">By scope</div></div>
+  </div>
+  <p class="rate-note reveal">* Figures shown are pulled from the current rate card — please confirm final pricing before this goes public.</p>
+</section>
+
+<section id="contact">
+  <div class="contact-ring"></div>
+  <div class="contact-ring ring2"></div>
+  <h2>Got a project that needs fixing from the ground up?</h2>
+  <p>Send your brief or book a quick call — I'll get back to you within 24h.</p>
+  <a href="#" class="btn-primary big">Get a Project Quote →</a>
+</section>
+
+<footer>© Babicone — Brand Chaos Fixer. Demo layout, illustrative content.</footer>
+
+<script>
+  // Scroll-reveal for standard blocks
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:.15});
+  revealEls.forEach(el=>io.observe(el));
+
+  // Nav background intensify on scroll
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', ()=>{
+    nav.style.background = window.scrollY > 60 ? 'rgba(83,0,47,0.9)' : 'rgba(235,53,156,0.85)';
+  });
+
+  // Nav CTA auto-flip: FREE CONSULTANT <-> I NEED QUOTATION
+  const ctaFlip = document.getElementById('ctaFlip');
+  setInterval(()=> ctaFlip.classList.toggle('flipped'), 2800);
+
+  // FIT story sequence: cycle "I need to fix..." lines, then collapse, reveal hook + arrows
+  const fitSection = document.getElementById('fit-story');
+  const fixLines = document.querySelectorAll('.fix-line');
+  const fitTicker = document.querySelector('.fix-ticker');
+  const fitLead = document.querySelector('.fit-lead');
+  const fitGiant = document.querySelector('.fit-giant-wrap');
+  const fitArrows = document.querySelectorAll('.fit-arrows > li');
+  let fitStarted = false;
+  window.__stopFitSequence = () => { fitStarted = true; };
+
+  function runFitSequence(){
+    if(fitStarted) return;
+    fitStarted = true;
+    let i = 0;
+    const showNext = () => {
+      fixLines.forEach(l => l.classList.remove('active'));
+      if(i < fixLines.length){
+        fixLines[i].classList.add('active');
+        i++;
+        setTimeout(showNext, 850);
+      } else {
+        fitTicker.classList.add('collapsed');
+        setTimeout(()=>{
+          fitLead.classList.add('show');
+          setTimeout(()=>{
+            fitGiant.classList.add('show');
+            setTimeout(()=>{
+              fitArrows.forEach((a, idx)=> setTimeout(()=> a.classList.add('show'), idx*220));
+            }, 450);
+          }, 400);
+        }, 500);
+      }
+    };
+    showNext();
+  }
+
+  const fitObserver = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ runFitSequence(); fitObserver.disconnect(); } });
+  }, {threshold:.4});
+  fitObserver.observe(fitSection);
+</script>
+
+</body>
+</html>
