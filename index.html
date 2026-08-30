@@ -69,6 +69,10 @@
   .blob2{width:300px; height:300px; background:var(--maroon); bottom:-80px; left:-60px; animation-delay:3s;}
   @keyframes float{0%,100%{transform:translateY(0) translateX(0);} 50%{transform:translateY(-30px) translateX(20px);}}
 
+  /* Desktop: two-column balance so content isn't all bunched left. Mobile keeps the original single-column stack for now. */
+  .hero-inner{position:relative; z-index:1;}
+  .hero-content{max-width:720px;}
+
   .hero-tag{
     display:inline-block; align-self:flex-start;
     background:var(--maroon); color:var(--cyan);
@@ -79,16 +83,51 @@
   .hero h1{
     font-size:clamp(48px, 9vw, 108px);
     font-weight:900; line-height:0.95; letter-spacing:-2px;
-    opacity:0; animation:riseIn .8s ease forwards; animation-delay:.25s;
   }
+  .hero h1 .h1-build, .hero h1 .h1-fit{opacity:0; animation:fadeIn .8s ease forwards;}
+  .hero h1 .h1-build{animation-delay:.35s;}
+  .hero h1 .h1-fit{animation-delay:.7s;}
+  @keyframes fadeIn{from{opacity:0;} to{opacity:1;}}
   .hero h1 .fit-word{color:var(--maroon); -webkit-text-stroke:2px var(--cyan);}
   .hero h1 .hero-quote{color:var(--maroon); opacity:.55; font-size:.55em; vertical-align:.12em;}
+  .hero h1 .end-dot{font-weight:400;}
   .hero-punch{
     max-width:640px; margin-top:20px; font-size:clamp(20px,3vw,32px); font-weight:800; line-height:1.3; opacity:0;
-    animation:riseIn .8s ease forwards; animation-delay:.42s;
+    animation:riseIn .8s ease forwards; animation-delay:1.05s;
   }
   .hero-punch .f-letter{color:var(--maroon); -webkit-text-stroke:2px var(--cyan); font-weight:900;}
-  .hero-actions{margin-top:36px; display:flex; gap:16px; opacity:0; animation:riseIn .8s ease forwards; animation-delay:.6s;}
+  .hero-actions{margin-top:36px; display:flex; gap:16px;}
+  .hero-actions > a{opacity:0; animation:riseIn .7s ease forwards;}
+  .hero-actions > a:nth-child(1){animation-delay:1.35s;}
+  .hero-actions > a:nth-child(2){animation-delay:1.6s;}
+
+  /* Desktop-only right-side visual so the wide layout doesn't read as empty/left-heavy */
+  .hero-visual{display:none;}
+  @media (min-width:901px){
+    .hero-inner{
+      display:grid; grid-template-columns:1.15fr .85fr; align-items:center; gap:32px;
+    }
+    .hero-visual{display:flex; position:relative; justify-content:center; align-items:center; min-height:420px;}
+  }
+  .hero-visual-card{
+    position:relative; width:300px; height:300px;
+    background:rgba(255,255,255,.08); border:2px solid rgba(141,251,255,.4);
+    border-radius:32px; backdrop-filter:blur(6px);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    transform:rotate(-4deg);
+    opacity:0; animation:riseIn 1s ease forwards; animation-delay:1.3s;
+  }
+  .hero-visual-card .hv-quote{font-size:56px; font-weight:900; color:var(--cyan); opacity:.6; line-height:1;}
+  .hero-visual-card .hv-fit{font-size:88px; font-weight:900; color:var(--white); -webkit-text-stroke:2px var(--cyan); letter-spacing:-2px; line-height:.9;}
+  .hero-visual-card .hv-tag{margin-top:14px; font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--cyan);}
+  .hero-stat{
+    position:absolute; background:var(--maroon); color:var(--white); font-weight:800; font-size:20px;
+    padding:12px 16px; border-radius:16px; box-shadow:0 12px 28px rgba(0,0,0,.25); line-height:1.2;
+    opacity:0; animation:riseIn .8s ease forwards;
+  }
+  .hero-stat small{display:block; font-size:10px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; opacity:.75; margin-top:4px;}
+  .hero-stat-1{top:4%; right:0%; animation-delay:1.55s; transform:rotate(3deg);}
+  .hero-stat-2{bottom:6%; left:-4%; animation-delay:1.75s; transform:rotate(-2deg);}
   .btn-primary{
     background:var(--maroon); color:var(--cyan); font-weight:700; font-size:15px;
     padding:16px 32px; border-radius:999px; display:inline-flex; align-items:center; gap:8px;
@@ -146,7 +185,7 @@
   .fit-giant-wrap.show{opacity:1; transform:scale(1);}
   .fit-giant{display:flex; align-items:center; justify-content:center; gap:8px;}
   .quote-mark{font-size:clamp(40px,7vw,84px); font-weight:900; color:var(--maroon); opacity:.5; line-height:1; align-self:flex-start;}
-  .fit-word-giant{font-size:clamp(76px,15vw,180px); font-weight:900; color:var(--maroon); letter-spacing:-3px; line-height:.9;}
+  .fit-word-giant{font-size:clamp(76px,15vw,180px); font-weight:900; color:var(--cyan); -webkit-text-stroke:3px var(--maroon); letter-spacing:-3px; line-height:.9;}
   .fit-sub{margin-top:10px; font-size:clamp(16px,2vw,20px); font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--cyan);}
 
   .fit-arrows{
@@ -240,9 +279,20 @@
 
   /* ---------- Rate card teaser ---------- */
   #rates{background:var(--pink);}
-  .rate-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px;}
-  .rate-card{background:var(--maroon); border-radius:18px; padding:26px 20px; text-align:center; transition:transform .3s ease;}
-  .rate-card:hover{transform:translateY(-6px);}
+  .typewriter-cursor{display:inline-block; width:3px; height:.85em; margin-left:2px; vertical-align:-2px; background:var(--cyan); animation:twBlink .8s steps(1) infinite;}
+  @keyframes twBlink{50%{opacity:0;}}
+  .rate-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; perspective:1200px;}
+  .rate-card{
+    background:var(--maroon); border-radius:18px; padding:26px 20px; text-align:center;
+    transform-style:preserve-3d; opacity:0; transform:rotateY(-90deg);
+    transition:opacity .6s ease, transform .7s cubic-bezier(.34,1.56,.64,1);
+  }
+  .rate-card:nth-child(1){transition-delay:0s;}
+  .rate-card:nth-child(2){transition-delay:.12s;}
+  .rate-card:nth-child(3){transition-delay:.24s;}
+  .rate-card:nth-child(4){transition-delay:.36s;}
+  .rate-card.flip-in{opacity:1; transform:rotateY(0deg);}
+  .rate-card.flip-in:hover{transform:translateY(-6px) rotateY(0deg);}
   .rate-card .rate-label{font-size:12px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; opacity:.8;}
   .rate-card .rate-num{font-size:34px; font-weight:900; color:var(--cyan); margin-top:12px;}
   .rate-note{margin-top:24px; font-size:12.5px; opacity:.65; text-align:center;}
@@ -276,6 +326,7 @@
     <li><a href="#services">SERVICES</a></li>
     <li><a href="#portfolio">CREDENTIALS</a></li>
     <li><a href="#rates">MY RATECARD</a></li>
+    <li><a href="timetracker/">TIME TRACKER</a></li>
   </ul>
   <a href="#contact" class="cta-flip" id="ctaFlip">
     <span class="flip-inner">
@@ -288,24 +339,36 @@
 <header class="hero">
   <div class="blob blob1"></div>
   <div class="blob blob2"></div>
-  <div class="hero-tag">Brand Chaos Fixer</div>
-  <h1>BUILD<br>THE <span class="hero-quote">"</span><span class="fit-word">FIT</span><span class="hero-quote">"</span>.</h1>
-  <p class="hero-punch">Every business problem starts with <span class="f-letter">F</span>.</p>
-  <div class="hero-actions">
-    <a href="#contact" class="btn-primary">Get a Project Quote →</a>
-    <a href="#services" class="btn-ghost">View Services</a>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-tag">Brand Chaos Fixer</div>
+      <h1><span class="h1-build">BUILD<br>THE</span> <span class="h1-fit"><span class="hero-quote">"</span><span class="fit-word">FIT</span><span class="hero-quote">"</span><span class="end-dot">.</span></span></h1>
+      <p class="hero-punch">Every business problem starts with <span class="f-letter">F</span>.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Get a Project Quote →</a>
+        <a href="#services" class="btn-ghost">View Services</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-visual-card">
+        <span class="hv-quote">"</span>
+        <span class="hv-fit">FIT</span>
+        <span class="hv-tag">is all you need</span>
+      </div>
+      <div class="hero-stat hero-stat-1">6 <small>service lines</small></div>
+      <div class="hero-stat hero-stat-2">1 <small>system, not six jobs</small></div>
+    </div>
   </div>
   <div class="scroll-cue"><div class="line"></div>SCROLL</div>
 </header>
 
 <section id="fit-story">
   <div class="fix-ticker">
-    <span class="fix-line">"I need to fix my marketing team."</span>
-    <span class="fix-line">"I need to fix my workflow."</span>
-    <span class="fix-line">"I need to fix the deadline."</span>
-    <span class="fix-line">"I need to fix the brief."</span>
-    <span class="fix-line">"I need to fix the content."</span>
-    <span class="fix-line">"I need to fix everything…"</span>
+    <span class="fix-line">"I need to fix everything."</span>
+    <span class="fix-line">"I need my Ad more creative."</span>
+    <span class="fix-line">"I need more designers."</span>
+    <span class="fix-line">"I need better workflow."</span>
+    <span class="fix-line">"I need to fix my calendar."</span>
   </div>
   <p class="fit-lead">You see? You can't fix everything you see in your business as a problem.</p>
 
@@ -401,12 +464,12 @@
 
 <section id="rates">
   <div class="section-label reveal"><div class="dot">C</div><span>Rate Card</span></div>
-  <h2 class="section-title reveal">Pick the working arrangement that fits your project.</h2>
+  <h2 class="section-title reveal" id="ratesTitle">Pick the working arrangement that fits your project.</h2>
   <div class="rate-grid">
-    <div class="rate-card reveal"><div class="rate-label">By Project</div><div class="rate-num">$8.99</div></div>
-    <div class="rate-card reveal"><div class="rate-label">Full Time</div><div class="rate-num">$11.99</div></div>
-    <div class="rate-card reveal"><div class="rate-label">Part Time</div><div class="rate-num">$9.99</div></div>
-    <div class="rate-card reveal"><div class="rate-label">Urgency</div><div class="rate-num" style="font-size:20px; padding-top:8px;">By scope</div></div>
+    <div class="rate-card"><div class="rate-label">By Project</div><div class="rate-num">$8.99</div></div>
+    <div class="rate-card"><div class="rate-label">Full Time</div><div class="rate-num">$11.99</div></div>
+    <div class="rate-card"><div class="rate-label">Part Time</div><div class="rate-num">$9.99</div></div>
+    <div class="rate-card"><div class="rate-label">Urgency</div><div class="rate-num" style="font-size:20px; padding-top:8px;">By scope</div></div>
   </div>
   <p class="rate-note reveal">* Figures shown are pulled from the current rate card — please confirm final pricing before this goes public.</p>
 </section>
@@ -425,9 +488,49 @@
   // Scroll-reveal for standard blocks
   const revealEls = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        if(e.target.id === 'ratesTitle') typewriterReveal(e.target);
+        io.unobserve(e.target);
+      }
+    });
   }, {threshold:.15});
   revealEls.forEach(el=>io.observe(el));
+
+  // Rate card teaser: typewriter effect on the heading
+  function typewriterReveal(el){
+    const text = el.textContent;
+    el.textContent = '';
+    const cursor = document.createElement('span');
+    cursor.className = 'typewriter-cursor';
+    el.appendChild(cursor);
+    let i = 0;
+    const step = () => {
+      if(i < text.length){
+        cursor.insertAdjacentText('beforebegin', text[i]);
+        i++;
+        setTimeout(step, 26);
+      } else {
+        setTimeout(()=> cursor.remove(), 900);
+      }
+    };
+    step();
+  }
+
+  // Rate card teaser: flip-in reveal for the 4 pricing boxes
+  const rateGrid = document.querySelector('.rate-grid');
+  if(rateGrid){
+    const rateObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.querySelectorAll('.rate-card').forEach(c=>c.classList.add('flip-in'));
+          rateObserver.unobserve(e.target);
+        }
+      });
+    }, {threshold:.2});
+    rateObserver.observe(rateGrid);
+  }
 
   // Nav background intensify on scroll
   const nav = document.querySelector('nav');
