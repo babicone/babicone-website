@@ -83,15 +83,15 @@
     position:relative;
     padding:0 48px;
     overflow:hidden;
-    background:var(--maroon-deep);
+    background:var(--pink);
   }
   .blob{position:absolute; border-radius:50%; filter:blur(60px); opacity:.55; animation:float 12s ease-in-out infinite;}
   .blob2{width:300px; height:300px; background:var(--maroon); bottom:-80px; left:-60px; animation-delay:3s;}
   @keyframes float{0%,100%{transform:translateY(0) translateX(0);} 50%{transform:translateY(-30px) translateX(20px);}}
   .hero-corner{
     position:absolute; inset:0; z-index:0; pointer-events:none;
-    background:radial-gradient(ellipse 900px 700px at -8% -12%, #04070a 0%, #0c2a30 32%, #1c6b78 58%, var(--cyan) 100%);
-    opacity:.6;
+    background:radial-gradient(ellipse 900px 700px at -8% -12%, #04070a 0%, #0c2a30 32%, #1c6b78 58%, rgba(141,251,255,0) 100%);
+    opacity:.85;
   }
 
   /* Desktop: two-column balance so content isn't all bunched left. Mobile keeps the original single-column stack for now. */
