@@ -83,6 +83,7 @@
     position:relative;
     padding:0 48px;
     overflow:hidden;
+    background:var(--maroon-deep);
   }
   .blob{position:absolute; border-radius:50%; filter:blur(60px); opacity:.55; animation:float 12s ease-in-out infinite;}
   .blob2{width:300px; height:300px; background:var(--maroon); bottom:-80px; left:-60px; animation-delay:3s;}
@@ -343,8 +344,8 @@
   .lightbox.open{display:flex;}
   .lightbox-backdrop{position:absolute; inset:0; background:rgba(19,16,13,.88); backdrop-filter:blur(4px);}
   .lightbox-panel{
-    position:relative; z-index:1; max-width:920px; width:100%;
-    background:var(--maroon-deep); border-radius:24px; padding:0 0 22px; overflow:hidden;
+    position:relative; z-index:1; max-width:920px; width:100%; max-height:88vh;
+    background:var(--maroon-deep); border-radius:24px; padding:0 0 22px; overflow-y:auto; overflow-x:hidden;
     transform:translateY(24px) scale(.97); opacity:0; transition:transform .35s cubic-bezier(.2,.8,.2,1), opacity .35s ease;
   }
   .lightbox.open .lightbox-panel{transform:translateY(0) scale(1); opacity:1;}
@@ -379,6 +380,14 @@
   .lb-dots{display:flex; gap:6px; justify-content:center; padding:14px 20px 0;}
   .lb-dots button{width:7px; height:7px; border-radius:50%; border:none; background:rgba(255,255,255,.25); cursor:pointer; padding:0;}
   .lb-dots button.active{background:var(--cyan); width:18px; border-radius:4px; transition:width .2s ease;}
+  .lb-body{padding:22px 28px 0;}
+  .lb-body p.lead{font-size:14px; line-height:1.7; opacity:.85; margin-bottom:18px;}
+  .lb-body .lb-label{font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--cyan); opacity:.9; margin-bottom:10px;}
+  .lb-body ul{list-style:none; margin-bottom:20px;}
+  .lb-body ul li{font-size:13px; line-height:1.6; opacity:.85; padding-left:18px; position:relative; margin-bottom:8px;}
+  .lb-body ul li::before{content:'→'; position:absolute; left:0; color:var(--cyan);}
+  .lb-body .lb-outcome{background:rgba(141,251,255,.08); border:1px solid rgba(141,251,255,.3); border-radius:14px; padding:16px 18px; font-size:13px; line-height:1.6;}
+  .lb-body .lb-note{margin-top:16px; font-size:11.5px; opacity:.55; font-style:italic;}
 
   /* ---------- Rate card teaser ---------- */
   #rates{background:var(--pink);}
@@ -558,6 +567,13 @@
       <div class="lb-counter" id="lbCounter"></div>
     </div>
     <div class="lb-dots" id="lbDots"></div>
+    <div class="lb-body" id="lbBody">
+      <p class="lead" id="lbLead"></p>
+      <div class="lb-label">Approach</div>
+      <ul id="lbApproach"></ul>
+      <div class="lb-outcome" id="lbOutcome"></div>
+      <p class="lb-note" id="lbNote"></p>
+    </div>
   </div>
 </div>
 
@@ -845,25 +861,61 @@
       tag: 'F&amp;B / Brand &amp; Marketing Strategy',
       title: 'Gyro Republic — Growth &amp; Brand System',
       count: 7,
-      prefix: 'portfolio/case-slides/gyro-'
+      prefix: 'portfolio/case-slides/gyro-',
+      lead: 'A 7-store US Halal Mediterranean chain running fast, but without a system tying pricing, content, and CRM together — so every channel effort stayed one-off instead of compounding.',
+      approach: [
+        'Diagnosed 6 gaps blocking channel efforts from compounding: brand consistency, pricing strategy, content strategy, product display, CRM, and PR.',
+        'Built a 3-pillar brand system around a food-forward, protein-first visual identity.',
+        'Mapped generation-specific hooks: Gen Z (digital-first), Millennial (O2O-to-D2C), Gen X (traditional, trust-led).',
+        'Built a full awareness-to-retention funnel and a phased 90-day rollout tied to a % of revenue marketing budget.'
+      ],
+      outcome: 'Strategy proposal — precise financial targets kept confidential per client agreement.',
+      note: ''
     },
     starcafe: {
       tag: 'F&amp;B / Brand Strategy &amp; System Ownership',
       title: 'StarCafe — Airport Brand Identity System',
       count: 6,
-      prefix: 'portfolio/case-slides/starcafe-'
+      prefix: 'portfolio/case-slides/starcafe-',
+      lead: 'A Vietnamese airport cafe with limited brand recognition, an inconsistent identity, and product categories that hadn\'t been refreshed since 2013 — inside high-transit spaces where visibility and product clarity decide the sale in seconds.',
+      approach: [
+        'Built a full Brand Identity System from the ground up: market research, brand character, look, tone and guidelines.',
+        'Anchored the concept in "As Bold As The Vietnamese," carried across logo lockups, uniforms, packaging and cup design.',
+        'Led New Product Development end-to-end — Vietnamese Baguette, LTO Combo, and Matcha Collection — from shopper input through launch rollout.',
+        'Directed the Social Media System: content planning, copywriting briefs, and output quality control.'
+      ],
+      outcome: 'Reusable identity and campaign system now carried across StarCafe\'s airport touchpoints.',
+      note: 'Brand strategy & system ownership — led end-to-end as Marketing Supervisor, Autogrill VFS.'
     },
     bigbowl: {
       tag: 'F&amp;B / Product Storytelling &amp; LTO Strategy',
       title: 'BigBowl — Hero Product &amp; Value Perception',
       count: 5,
-      prefix: 'portfolio/case-slides/bigbowl-'
+      prefix: 'portfolio/case-slides/bigbowl-',
+      lead: 'An authentic phở concept since 2013, but premium airport pricing wasn\'t backed by clear product or quality cues — and a genuinely strong hero product, Wagyu Beef Phở, wasn\'t being used to build distinction.',
+      approach: [
+        'Diagnosed four gaps: category familiarity, value perception, fragmented touchpoints, and an underused hero product.',
+        'Repositioned Wagyu Beef Phở as the product anchor, then built value-led combo offers around it.',
+        'Ran the full Market Signal → Strategic Decision → LTO Development → Campaign Rollout pipeline for seasonal offers.',
+        'Directed digital ordering, social channels, website/SEO and physical brand presence as one connected system.'
+      ],
+      outcome: 'Seasonal product-combo platforms and campaign KV systems now adaptable across menus, airport media, and in-store touchpoints.',
+      note: 'Brand strategy & system ownership — led end-to-end as Marketing Supervisor, Autogrill VFS.'
     },
     saladstop: {
       tag: 'F&amp;B / Localization &amp; Content Strategy',
       title: 'SaladStop! Vietnam — Local Relevance at Scale',
       count: 5,
-      prefix: 'portfolio/case-slides/saladstop-'
+      prefix: 'portfolio/case-slides/saladstop-',
+      lead: 'SaladStop!\'s global healthy-food identity wasn\'t translating locally — Vietnamese customers needed clearer relevance, not just a "healthy food" label, across three Ho Chi Minh City stores.',
+      approach: [
+        'Diagnosed the gap: limited category awareness, premium price perception, a narrow initial audience, and low local relevance.',
+        'Ran market education, market expansion, and product localization as the three core strategic actions.',
+        'Localized a Korean-inspired menu within SaladStop!\'s wellness positioning for the District 7, Korean-community store.',
+        'Directed photography, copywriting and social content production across the 2022–2023 campaign calendar.'
+      ],
+      outcome: '+18% YoY growth in 2022, with a stronger health-lifestyle association across all three stores.',
+      note: 'Brand & marketing operations — led end-to-end as Marketing Supervisor, Autogrill VFS × MFT Group JV.'
     }
   };
 
@@ -875,6 +927,10 @@
   const lbNext = document.getElementById('lbNext');
   const lbCounter = document.getElementById('lbCounter');
   const lbDots = document.getElementById('lbDots');
+  const lbLead = document.getElementById('lbLead');
+  const lbApproach = document.getElementById('lbApproach');
+  const lbOutcome = document.getElementById('lbOutcome');
+  const lbNote = document.getElementById('lbNote');
 
   let activeCase = null;
   let activeSlide = 0;
@@ -905,6 +961,10 @@
     activeSlide = 0;
     lbTag.innerHTML = d.tag;
     lbTitle.innerHTML = d.title;
+    lbLead.textContent = d.lead || '';
+    lbApproach.innerHTML = (d.approach || []).map(a=>`<li>${a}</li>`).join('');
+    lbOutcome.textContent = d.outcome || '';
+    lbNote.textContent = d.note || '';
     lbFrame.innerHTML = '';
     lbDots.innerHTML = '';
     for(let n=1; n<=d.count; n++){
@@ -924,6 +984,8 @@
     renderSlide();
     lightbox.classList.add('open');
     document.body.style.overflow = 'hidden';
+    const panelEl = lightbox.querySelector('.lightbox-panel');
+    if (panelEl) panelEl.scrollTop = 0;
   }
   function closeCase(){
     if (!lightbox) return;
