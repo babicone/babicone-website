@@ -4,6 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Babicone — Brand Chaos Fixer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <style>
   :root{
     --pink:#eb359c;
@@ -14,8 +17,25 @@
     --cream:#fcf2e0;
     --white:#ffffff;
     --ink:#13100d;
+    --cyan-white:#eafffe;
+    --font-display:'Anton', 'Helvetica Neue', Arial, sans-serif;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
+
+  /* ---------- Gradient / display text utility ---------- */
+  .grad-text{
+    font-family:var(--font-display); font-weight:400; letter-spacing:-1px;
+    background:radial-gradient(circle at 32% 28%, #ffffff 0%, var(--cyan-white) 22%, var(--cyan) 60%, #4fb8bd 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    display:inline-block;
+  }
+  .grad-text.shine{
+    background:linear-gradient(115deg, var(--cyan) 0%, var(--cyan-white) 18%, #ffffff 32%, var(--cyan-white) 46%, var(--cyan) 60%, #4fb8bd 100%);
+    background-size:220% auto;
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation:shineSweep 3.2s linear infinite;
+  }
+  @keyframes shineSweep{0%{background-position:200% center;} 100%{background-position:-40% center;}}
   html{scroll-behavior:smooth;}
   body{
     font-family:'Helvetica Neue', Arial, sans-serif;
@@ -65,9 +85,13 @@
     overflow:hidden;
   }
   .blob{position:absolute; border-radius:50%; filter:blur(60px); opacity:.55; animation:float 12s ease-in-out infinite;}
-  .blob1{width:420px; height:420px; background:var(--cyan); top:-120px; right:-100px; animation-delay:0s;}
   .blob2{width:300px; height:300px; background:var(--maroon); bottom:-80px; left:-60px; animation-delay:3s;}
   @keyframes float{0%,100%{transform:translateY(0) translateX(0);} 50%{transform:translateY(-30px) translateX(20px);}}
+  .hero-corner{
+    position:absolute; inset:0; z-index:0; pointer-events:none;
+    background:radial-gradient(ellipse 900px 700px at -8% -12%, #04070a 0%, #0c2a30 32%, #1c6b78 58%, var(--cyan) 100%);
+    opacity:.6;
+  }
 
   /* Desktop: two-column balance so content isn't all bunched left. Mobile keeps the original single-column stack for now. */
   .hero-inner{position:relative; z-index:1;}
@@ -78,28 +102,30 @@
     background:var(--maroon); color:var(--cyan);
     font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
     padding:8px 16px; border-radius:999px; margin-bottom:24px;
-    opacity:0; animation:riseIn .7s ease forwards; animation-delay:.1s;
+    opacity:0; animation:riseInLoop 5.6s ease infinite; animation-delay:.1s;
   }
   .hero h1{
+    font-family:var(--font-display); font-weight:400;
     font-size:clamp(48px, 9vw, 108px);
-    font-weight:900; line-height:0.95; letter-spacing:-2px;
+    line-height:0.95; letter-spacing:-1px;
   }
-  .hero h1 .h1-build, .hero h1 .h1-fit{opacity:0; animation:fadeIn .8s ease forwards;}
-  .hero h1 .h1-build{animation-delay:.35s;}
-  .hero h1 .h1-fit{animation-delay:.7s;}
-  @keyframes fadeIn{from{opacity:0;} to{opacity:1;}}
-  .hero h1 .fit-word{color:var(--maroon); -webkit-text-stroke:2px var(--cyan);}
-  .hero h1 .hero-quote{color:var(--maroon); opacity:.55; font-size:.55em; vertical-align:.12em;}
-  .hero h1 .end-dot{font-weight:400;}
+  .hero h1 .h1-build, .hero h1 .h1-fit{opacity:0; animation:riseInLoop 5.6s ease infinite;}
+  .hero h1 .h1-build{animation-delay:.25s;}
+  .hero h1 .h1-fit{animation-delay:.55s;}
+  @keyframes riseInLoop{
+    0%{opacity:0; transform:translateY(20px);}
+    9%{opacity:1; transform:translateY(0);}
+    82%{opacity:1; transform:translateY(0);}
+    100%{opacity:0; transform:translateY(-8px);}
+  }
+  .hero h1 .fit-word{font-family:var(--font-display); font-weight:400;}
+  .hero h1 .hero-quote{color:var(--cyan); opacity:.7; font-size:.55em; vertical-align:.12em;}
+  .hero h1 .end-dot{font-weight:400; color:var(--white);}
   .hero-punch{
     max-width:640px; margin-top:20px; font-size:clamp(20px,3vw,32px); font-weight:800; line-height:1.3; opacity:0;
-    animation:riseIn .8s ease forwards; animation-delay:1.05s;
+    animation:riseInLoop 5.6s ease infinite; animation-delay:.85s;
   }
   .hero-punch .f-letter{color:var(--maroon); -webkit-text-stroke:2px var(--cyan); font-weight:900;}
-  .hero-actions{margin-top:36px; display:flex; gap:16px;}
-  .hero-actions > a{opacity:0; animation:riseIn .7s ease forwards;}
-  .hero-actions > a:nth-child(1){animation-delay:1.35s;}
-  .hero-actions > a:nth-child(2){animation-delay:1.6s;}
 
   /* Desktop-only right-side visual so the wide layout doesn't read as empty/left-heavy */
   .hero-visual{display:none;}
@@ -109,36 +135,39 @@
     }
     .hero-visual{display:flex; position:relative; justify-content:center; align-items:center; min-height:420px;}
   }
-  .hero-visual-card{
-    position:relative; width:300px; height:300px;
-    background:rgba(255,255,255,.08); border:2px solid rgba(141,251,255,.4);
-    border-radius:32px; backdrop-filter:blur(6px);
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
+  .hero-visual-wrap{
+    position:relative; width:300px; height:300px; border-radius:32px; padding:3px; overflow:hidden;
     opacity:0; animation:riseIn 1s ease forwards 1.3s, hvBreathe 3.4s ease-in-out infinite 2.3s;
+  }
+  .hero-visual-wrap::before{
+    content:''; position:absolute; top:50%; left:50%; z-index:0;
+    width:800px; height:800px; margin:-400px 0 0 -400px;
+    background:conic-gradient(from 0deg, transparent 0deg, var(--cyan-white) 8deg, var(--cyan) 20deg, transparent 46deg, transparent 360deg);
+    animation:hvStreak 1.5s linear infinite; transform-origin:center;
+  }
+  @keyframes hvStreak{to{transform:rotate(360deg);}}
+  .hero-visual-card{
+    position:relative; z-index:1; width:100%; height:100%;
+    background:rgba(58,0,34,.9); border:2px solid rgba(141,251,255,.4);
+    border-radius:29px; backdrop-filter:blur(6px);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    overflow:hidden;
   }
   .hero-visual-card::before{
     content:''; position:absolute; inset:-30px; border-radius:50%;
-    border:2px dashed rgba(141,251,255,.4);
+    border:2px dashed rgba(141,251,255,.35);
     animation:hvSpin 16s linear infinite; pointer-events:none; z-index:-1;
   }
   .hero-visual-card::after{
     content:''; position:absolute; inset:-52px; border-radius:50%;
-    border:1px dotted rgba(141,251,255,.22);
+    border:1px dotted rgba(141,251,255,.2);
     animation:hvSpin 24s linear infinite reverse; pointer-events:none; z-index:-1;
   }
   @keyframes hvSpin{to{transform:rotate(360deg);}}
   @keyframes hvBreathe{0%,100%{transform:translateY(0) scale(1);} 50%{transform:translateY(0) scale(1.05);}}
-  .hero-visual-card .hv-quote{font-size:56px; font-weight:900; color:var(--cyan); opacity:.6; line-height:1;}
-  .hero-visual-card .hv-fit{font-size:88px; font-weight:900; color:var(--white); -webkit-text-stroke:2px var(--cyan); letter-spacing:-2px; line-height:.9;}
+  .hero-visual-card .hv-quote{font-size:56px; font-weight:900; color:var(--cyan); opacity:.7; line-height:1;}
+  .hero-visual-card .hv-fit{font-family:var(--font-display); font-weight:400; font-size:88px; letter-spacing:-1px; line-height:.9;}
   .hero-visual-card .hv-tag{margin-top:14px; font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--cyan);}
-  .hero-stat{
-    position:absolute; background:var(--maroon); color:var(--white); font-weight:800; font-size:20px;
-    padding:12px 16px; border-radius:16px; box-shadow:0 12px 28px rgba(0,0,0,.25); line-height:1.2;
-    opacity:0; animation:riseIn .8s ease forwards;
-  }
-  .hero-stat small{display:block; font-size:10px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; opacity:.75; margin-top:4px;}
-  .hero-stat-1{top:4%; right:0%; animation-delay:1.55s; transform:rotate(3deg);}
-  .hero-stat-2{bottom:6%; left:-4%; animation-delay:1.75s; transform:rotate(-2deg);}
   .btn-primary{
     background:var(--maroon); color:var(--cyan); font-weight:700; font-size:15px;
     padding:16px 32px; border-radius:999px; display:inline-flex; align-items:center; gap:8px;
@@ -172,6 +201,7 @@
 
   /* ---------- FIT story ---------- */
   #fit-story{padding-top:40px; padding-bottom:100px; text-align:center;}
+  #fit-story.snap-section{padding-top:0; padding-bottom:0; justify-content:center;}
   .fix-ticker{
     position:relative; height:52px; max-width:720px; margin:0 auto;
     transition:opacity .5s ease, transform .5s ease, height .5s ease, margin .5s ease;
@@ -184,20 +214,25 @@
   }
   .fix-line.active{opacity:1; transform:translateY(0);}
   .fit-lead{
-    max-width:600px; margin:44px auto 0; font-size:clamp(17px,2vw,20px); font-weight:600; opacity:0;
+    max-width:600px; margin:44px auto 0; font-size:clamp(14px,1.3vw,16px); font-weight:600; font-style:italic; opacity:0;
     transform:translateY(14px); transition:opacity .6s ease, transform .6s ease;
   }
-  .fit-lead.show{opacity:.85; transform:translateY(0);}
+  .fit-lead.show{opacity:.5; transform:translateY(0);}
 
   .fit-giant-wrap{
-    margin-top:22px; opacity:0; transform:scale(.82);
+    margin-top:22px; opacity:0; transform:scale(.82); position:relative;
     transition:opacity .7s cubic-bezier(.2,.8,.2,1), transform .7s cubic-bezier(.2,.8,.2,1);
   }
   .fit-giant-wrap.show{opacity:1; transform:scale(1);}
-  .fit-giant{display:flex; align-items:center; justify-content:center; gap:8px;}
-  .quote-mark{font-size:clamp(40px,7vw,84px); font-weight:900; color:var(--maroon); opacity:.5; line-height:1; align-self:flex-start;}
-  .fit-word-giant{font-size:clamp(76px,15vw,180px); font-weight:900; color:var(--cyan); -webkit-text-stroke:3px var(--maroon); letter-spacing:-3px; line-height:.9;}
+  .fit-giant{display:flex; align-items:center; justify-content:center; gap:8px; position:relative;}
+  .quote-mark{font-size:clamp(40px,7vw,84px); font-weight:900; color:var(--cyan); opacity:.85; line-height:1; align-self:flex-start;}
+  .fit-word-giant{font-size:clamp(76px,15vw,180px); letter-spacing:-4px; line-height:.9;}
   .fit-sub{margin-top:10px; font-size:clamp(16px,2vw,20px); font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--cyan);}
+  .sparkle{position:absolute; color:var(--cyan-white); font-size:22px; opacity:0; animation:sparkleTwinkle 2.6s ease-in-out infinite;}
+  .sparkle.s1{top:6%; left:14%; animation-delay:.2s;}
+  .sparkle.s2{top:18%; right:10%; animation-delay:1s;}
+  .sparkle.s3{bottom:10%; left:44%; animation-delay:1.8s; font-size:16px;}
+  @keyframes sparkleTwinkle{0%,100%{opacity:0; transform:scale(.4) rotate(0deg);} 50%{opacity:1; transform:scale(1) rotate(90deg);}}
 
   .fit-arrows{
     list-style:none; margin:60px auto 0; max-width:900px; padding:0;
@@ -208,50 +243,33 @@
   }
   .fit-connector.show{opacity:1;}
   .fit-card{
-    display:flex; flex-direction:column; align-items:center; gap:10px;
-    width:190px; padding:24px 18px; border-radius:20px; border:2px solid var(--cyan);
-    opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease;
+    position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;
+    width:190px; height:190px; padding:18px; border-radius:50%; border:2px solid rgba(141,251,255,.4);
+    background:rgba(58,0,34,.9); backdrop-filter:blur(6px);
+    opacity:0; transform:translateY(16px) scale(.85); transition:opacity .5s ease, transform .5s ease;
   }
-  .fit-card.show{opacity:1; transform:translateY(0);}
-  .fit-card-badge{font-size:30px; font-weight:900; letter-spacing:.5px; line-height:1;}
-  .fit-card-label{font-size:14.5px; font-weight:700; text-align:center; line-height:1.35;}
-
-  .fit-card.v-a{background:radial-gradient(circle at 32% 22%, #6b0038, #2c0018 78%);}
-  .fit-card.v-a .fit-card-badge{color:var(--cyan);}
-  .fit-card.v-a .fit-card-label{color:var(--white);}
-
-  .fit-card.v-b{background:linear-gradient(140deg, #f1ecf7, #9f8fdc);}
-  .fit-card.v-b .fit-card-badge{color:var(--maroon-deep);}
-  .fit-card.v-b .fit-card-label{color:var(--maroon-deep);}
-
-  .fit-card.v-c{background:linear-gradient(160deg, #1c1c1f, #000);}
-  .fit-card.v-c .fit-card-badge{color:var(--cyan);}
-  .fit-card.v-c .fit-card-label{color:var(--white);}
+  .fit-card::before{
+    content:''; position:absolute; inset:-14px; border-radius:50%;
+    border:2px dashed rgba(141,251,255,.3); animation:hvSpin 18s linear infinite; pointer-events:none; z-index:-1;
+  }
+  .fit-card::after{
+    content:''; position:absolute; inset:-26px; border-radius:50%;
+    border:1px dotted rgba(141,251,255,.18); animation:hvSpin 26s linear infinite reverse; pointer-events:none; z-index:-1;
+  }
+  .fit-card.show{opacity:1; transform:translateY(0) scale(1);}
+  .fit-card-badge{font-family:var(--font-display); font-weight:400; font-size:32px; letter-spacing:-.5px; line-height:1; color:var(--cyan);}
+  .fit-card-label{font-size:12.5px; font-weight:700; text-align:center; line-height:1.35; color:var(--white); opacity:.9;}
 
   @media (max-width:640px){
     .fit-arrows{flex-direction:column;}
     .fit-connector{transform:rotate(90deg);}
-    .fit-card{width:230px;}
-  }
-
-  /* ---------- Who I work with ---------- */
-  #who{text-align:center; padding-top:0; padding-bottom:100px;}
-  .who-eyebrow{font-size:13px; font-weight:800; letter-spacing:2px; text-transform:uppercase; opacity:.7; margin-bottom:24px;}
-  .chip-row{display:flex; flex-wrap:wrap; justify-content:center; gap:12px; max-width:760px; margin:0 auto 40px;}
-  .chip{
-    background:var(--maroon); color:var(--white); font-weight:700; font-size:13px; letter-spacing:.5px;
-    padding:10px 20px; border-radius:999px; transition:transform .25s ease, background .25s ease;
-  }
-  .chip:hover{transform:translateY(-3px); background:var(--maroon-deep);}
-  .chip.alt{background:rgba(255,255,255,.14);}
-  .signature-row{display:flex; justify-content:center; gap:14px; margin-top:8px;}
-  .sig-pill{
-    border:2px solid var(--cyan); color:var(--cyan); font-weight:800; font-size:13px; letter-spacing:1px;
-    padding:9px 20px; border-radius:999px; text-transform:uppercase;
+    .fit-card{width:230px; height:230px;}
   }
 
   /* ---------- Services ---------- */
   #services{background:var(--pink);}
+  #services.snap-section, #workframe.snap-section{justify-content:center;}
+  #workframe{background:var(--pink);}
   .services-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
   .service-card{background:var(--maroon); border-radius:18px; padding:28px 24px; min-height:190px; position:relative; overflow:hidden; transition:transform .3s ease, background .3s ease;}
   .service-card:hover{transform:translateY(-8px); background:var(--maroon-deep);}
@@ -262,6 +280,7 @@
   .service-card:hover::after{transform:scale(1.4);}
 
   .wf-tabs{margin-top:64px;}
+  #workframe .wf-tabs{margin-top:0;}
   .wf-tab-buttons{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px;}
   .wf-tab-btn{background:rgba(255,255,255,.14); color:var(--white); font-weight:800; font-size:12.5px; letter-spacing:.4px; padding:12px 20px; border-radius:999px; border:2px solid transparent; transition:.25s ease; cursor:pointer; font-family:inherit;}
   .wf-tab-btn:hover{background:rgba(255,255,255,.22);}
@@ -295,54 +314,75 @@
 
   /* ---------- Portfolio ---------- */
   #portfolio{background:var(--maroon-deep);}
+  #portfolio.snap-section{justify-content:center;}
+  #portfolio.snap-section .section-title{margin-bottom:32px;}
+  #portfolio.snap-section .project-thumb{height:140px;}
+  #portfolio.snap-section .project-body{padding:16px 20px 18px;}
+  #portfolio.snap-section .placeholder-note{margin-top:16px;}
   .portfolio-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:24px;}
   .project-card{border-radius:20px; overflow:hidden; background:var(--maroon); transition:transform .35s ease; cursor:pointer; border:none; text-align:left; font-family:inherit; color:inherit; padding:0; display:block; width:100%;}
   .project-card:hover{transform:translateY(-10px);}
   .project-thumb{
-    height:220px; display:flex; align-items:center; justify-content:center;
-    font-weight:900; font-size:15px; letter-spacing:1px; text-transform:uppercase;
-    color:var(--maroon-deep); background:linear-gradient(135deg, var(--cyan), var(--pink) 130%);
-    position:relative; overflow:hidden;
+    height:190px; display:flex; align-items:center; justify-content:center;
+    position:relative; overflow:hidden; background:var(--pink);
   }
-  .project-thumb img{width:100%; height:100%; object-fit:cover; display:block;}
-  .project-thumb span{position:relative; z-index:2; background:var(--white); padding:6px 14px; border-radius:999px; font-size:11px;}
-  .project-thumb::before{content:''; position:absolute; inset:0; background:repeating-linear-gradient(45deg, rgba(255,255,255,.15) 0 2px, transparent 2px 14px);}
-  .project-card.has-photo .project-thumb::before{display:none;}
+  .project-thumb .thumb-brand{
+    font-family:var(--font-display); font-weight:400; font-size:clamp(30px,3.4vw,44px);
+    letter-spacing:-1px; text-align:center; line-height:1.05; padding:0 20px;
+    background:radial-gradient(circle at 32% 26%, #ffffff 0%, var(--cyan-white) 24%, var(--cyan) 62%, var(--maroon-deep) 130%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
   .project-body{padding:22px 22px 26px;}
   .project-body .tag{font-size:11px; font-weight:800; letter-spacing:1.5px; color:var(--cyan); text-transform:uppercase;}
   .project-body h4{font-size:19px; font-weight:800; margin:10px 0 8px;}
   .project-body p{font-size:13px; opacity:.75; line-height:1.6;}
   .placeholder-note{margin-top:28px; font-size:12.5px; opacity:.6; text-align:center;}
 
-  /* Case study lightbox */
+  /* Case study lightbox: swipeable slide viewer */
   .lightbox{position:fixed; inset:0; z-index:200; display:none; align-items:center; justify-content:center; padding:24px;}
   .lightbox.open{display:flex;}
-  .lightbox-backdrop{position:absolute; inset:0; background:rgba(19,16,13,.82); backdrop-filter:blur(4px);}
+  .lightbox-backdrop{position:absolute; inset:0; background:rgba(19,16,13,.88); backdrop-filter:blur(4px);}
   .lightbox-panel{
-    position:relative; z-index:1; max-width:760px; width:100%; max-height:88vh; overflow-y:auto;
-    background:var(--maroon-deep); border-radius:24px; padding:0 0 36px;
+    position:relative; z-index:1; max-width:920px; width:100%;
+    background:var(--maroon-deep); border-radius:24px; padding:0 0 22px; overflow:hidden;
     transform:translateY(24px) scale(.97); opacity:0; transition:transform .35s cubic-bezier(.2,.8,.2,1), opacity .35s ease;
   }
   .lightbox.open .lightbox-panel{transform:translateY(0) scale(1); opacity:1;}
-  .lightbox-img{width:100%; aspect-ratio:2/1; object-fit:cover; display:block; border-radius:24px 24px 0 0;}
   .lightbox-close{
-    position:absolute; top:16px; right:16px; z-index:2; width:36px; height:36px; border-radius:50%;
+    position:absolute; top:16px; right:16px; z-index:3; width:36px; height:36px; border-radius:50%;
     background:rgba(19,16,13,.6); color:var(--white); border:none; font-size:18px; cursor:pointer;
     display:flex; align-items:center; justify-content:center;
   }
-  .lightbox-body{padding:28px 32px 0;}
-  .lightbox-body .tag{font-size:11px; font-weight:800; letter-spacing:1.5px; color:var(--cyan); text-transform:uppercase;}
-  .lightbox-body h3{font-size:26px; font-weight:900; margin:10px 0 14px;}
-  .lightbox-body p.lead{font-size:14px; line-height:1.7; opacity:.85; margin-bottom:18px;}
-  .lightbox-body .lb-label{font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--cyan); opacity:.9; margin-bottom:10px;}
-  .lightbox-body ul{list-style:none; margin-bottom:20px;}
-  .lightbox-body ul li{font-size:13px; line-height:1.6; opacity:.85; padding-left:18px; position:relative; margin-bottom:8px;}
-  .lightbox-body ul li::before{content:'→'; position:absolute; left:0; color:var(--cyan);}
-  .lightbox-body .lb-outcome{background:rgba(141,251,255,.08); border:1px solid rgba(141,251,255,.3); border-radius:14px; padding:16px 18px; font-size:13px; line-height:1.6;}
-  .lightbox-body .lb-note{margin-top:16px; font-size:11.5px; opacity:.55; font-style:italic;}
+  .lightbox-head{padding:22px 28px 0;}
+  .lightbox-head .tag{font-size:11px; font-weight:800; letter-spacing:1.5px; color:var(--cyan); text-transform:uppercase;}
+  .lightbox-head h3{font-size:21px; font-weight:800; margin:6px 0 0;}
+  .lb-slide-viewer{position:relative; margin-top:18px; background:#0d0007;}
+  .lb-slide-frame{position:relative; width:100%; aspect-ratio:16/9; overflow:hidden;}
+  .lb-slide-frame img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:contain; display:block;
+    opacity:0; transition:opacity .35s ease;
+  }
+  .lb-slide-frame img.active{opacity:1;}
+  .lb-arrow{
+    position:absolute; top:50%; transform:translateY(-50%); z-index:2;
+    width:44px; height:44px; border-radius:50%; border:none; cursor:pointer;
+    background:rgba(19,16,13,.55); color:var(--white); font-size:20px;
+    display:flex; align-items:center; justify-content:center; transition:background .2s ease, transform .2s ease;
+  }
+  .lb-arrow:hover{background:var(--cyan); color:var(--maroon-deep);}
+  .lb-arrow.prev{left:14px;}
+  .lb-arrow.next{right:14px;}
+  .lb-counter{
+    position:absolute; bottom:14px; right:18px; z-index:2; font-size:11.5px; font-weight:800; letter-spacing:1px;
+    background:rgba(19,16,13,.6); color:var(--cyan); padding:6px 12px; border-radius:999px;
+  }
+  .lb-dots{display:flex; gap:6px; justify-content:center; padding:14px 20px 0;}
+  .lb-dots button{width:7px; height:7px; border-radius:50%; border:none; background:rgba(255,255,255,.25); cursor:pointer; padding:0;}
+  .lb-dots button.active{background:var(--cyan); width:18px; border-radius:4px; transition:width .2s ease;}
 
   /* ---------- Rate card teaser ---------- */
   #rates{background:var(--pink);}
+  #rates.snap-section{justify-content:center;}
   .typewriter-cursor{display:inline-block; width:3px; height:.85em; margin-left:2px; vertical-align:-2px; background:var(--cyan); animation:twBlink .8s steps(1) infinite;}
   @keyframes twBlink{50%{opacity:0;}}
   .rate-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; perspective:1200px;}
@@ -388,6 +428,18 @@
     .rate-grid{grid-template-columns:repeat(2,1fr);}
     nav ul{display:none;}
   }
+
+  /* ---------- PC-only full-screen section-snap navigation ---------- */
+  @media (min-width:901px){
+    html{scroll-snap-type:y mandatory;}
+    .snap-section{
+      min-height:100vh; height:100vh; display:flex; flex-direction:column; justify-content:center;
+      scroll-snap-align:start; scroll-snap-stop:always; overflow-y:auto; overflow-x:hidden;
+      padding-top:96px; padding-bottom:36px;
+    }
+    .snap-section > *{width:100%;}
+    .snap-section .section-title{margin-bottom:36px;}
+  }
 </style>
 </head>
 <body>
@@ -408,33 +460,29 @@
   </a>
 </nav>
 
-<header class="hero">
-  <div class="blob blob1"></div>
+<header class="hero snap-section">
+  <div class="hero-corner"></div>
   <div class="blob blob2"></div>
   <div class="hero-inner">
     <div class="hero-content">
       <div class="hero-tag">Brand Chaos Fixer</div>
-      <h1><span class="h1-build">BUILD<br>THE</span> <span class="h1-fit"><span class="hero-quote">"</span><span class="fit-word">FIT</span><span class="hero-quote">"</span><span class="end-dot">.</span></span></h1>
+      <h1><span class="h1-build">BUILD<br>THE</span> <span class="h1-fit"><span class="hero-quote">"</span><span class="fit-word grad-text">FIT</span><span class="hero-quote">"</span><span class="end-dot">.</span></span></h1>
       <p class="hero-punch">Every business problem starts with <span class="f-letter">F</span>.</p>
-      <div class="hero-actions">
-        <a href="#contact" class="btn-primary">Get a Project Quote →</a>
-        <a href="#services" class="btn-ghost">View Services</a>
-      </div>
     </div>
     <div class="hero-visual">
-      <div class="hero-visual-card">
-        <span class="hv-quote">"</span>
-        <span class="hv-fit">FIT</span>
-        <span class="hv-tag">is all you need</span>
+      <div class="hero-visual-wrap">
+        <div class="hero-visual-card">
+          <span class="hv-quote">"</span>
+          <span class="hv-fit grad-text">FIT</span>
+          <span class="hv-tag">is all you need</span>
+        </div>
       </div>
-      <div class="hero-stat hero-stat-1">06 <small>service lines</small></div>
-      <div class="hero-stat hero-stat-2">01 <small>system, not 06 jobs</small></div>
     </div>
   </div>
   <div class="scroll-cue"><div class="line"></div>SCROLL</div>
 </header>
 
-<section id="fit-story">
+<section id="fit-story" class="snap-section">
   <div class="fix-ticker">
     <span class="fix-line">"I need to fix everything."</span>
     <span class="fix-line">"I need my Ad more creative."</span>
@@ -445,52 +493,76 @@
   <p class="fit-lead">You see? You can't fix everything you see in your business as a problem.</p>
 
   <div class="fit-giant-wrap">
-    <div class="fit-giant"><span class="quote-mark">"</span><span class="fit-word-giant">FIT</span><span class="quote-mark">"</span></div>
+    <div class="fit-giant">
+      <span class="quote-mark">"</span><span class="fit-word-giant grad-text shine">FIT</span><span class="quote-mark">"</span>
+      <span class="sparkle s1">✦</span><span class="sparkle s2">✧</span><span class="sparkle s3">✦</span>
+    </div>
     <p class="fit-sub">is all you need.</p>
   </div>
 
   <ul class="fit-arrows">
-    <li class="fit-card v-a">
+    <li class="fit-card">
       <span class="fit-card-badge">FIT</span>
       <span class="fit-card-label">the market size</span>
     </li>
     <li class="fit-connector">→</li>
-    <li class="fit-card v-b">
+    <li class="fit-card">
       <span class="fit-card-badge">FIT</span>
       <span class="fit-card-label">the customers' needs</span>
     </li>
     <li class="fit-connector">→</li>
-    <li class="fit-card v-c">
+    <li class="fit-card">
       <span class="fit-card-badge">FIT</span>
       <span class="fit-card-label">the scale of your business</span>
     </li>
   </ul>
 </section>
 
-<section id="who">
-  <div class="who-eyebrow">Who I Work With</div>
-  <div class="chip-row">
-    <span class="chip">Startup</span>
-    <span class="chip">SMEs</span>
-    <span class="chip">Corporation</span>
-    <span class="chip">Manufactory</span>
+<section id="portfolio" class="snap-section">
+  <div class="section-label reveal"><div class="dot">C</div><span>Portfolio</span></div>
+  <h2 class="section-title reveal">Real project scopes — not just a list of skills.</h2>
+
+  <div class="portfolio-grid">
+    <button class="project-card reveal" type="button" data-case="gyro">
+      <div class="project-thumb"><span class="thumb-brand">GYRO<br>REPUBLIC</span></div>
+      <div class="project-body"><div class="tag">F&amp;B / Brand &amp; Marketing Strategy</div><h4>Gyro Republic — Growth &amp; Brand System</h4><p>A 7-store US Halal Mediterranean chain needed one system tying pricing, content, and CRM together — built around a food-forward identity and generation-specific hooks.</p></div>
+    </button>
+    <button class="project-card reveal" type="button" data-case="starcafe">
+      <div class="project-thumb"><span class="thumb-brand">STAR CAFE</span></div>
+      <div class="project-body"><div class="tag">F&amp;B / Brand Strategy &amp; System Ownership</div><h4>StarCafe — Airport Brand Identity System</h4><p>A Vietnamese airport cafe with inconsistent identity and product categories untouched since 2013 — rebuilt into a bold, instantly local, ready-to-license brand system.</p></div>
+    </button>
+    <button class="project-card reveal" type="button" data-case="bigbowl">
+      <div class="project-thumb"><span class="thumb-brand">BIG BOWL</span></div>
+      <div class="project-body"><div class="tag">F&amp;B / Product Storytelling &amp; LTO Strategy</div><h4>BigBowl — Hero Product &amp; Value Perception</h4><p>Premium airport phở pricing wasn't backed by clear product cues — solved by anchoring the menu on a Wagyu Beef Phở hero product and value-led combo offers.</p></div>
+    </button>
+    <button class="project-card reveal" type="button" data-case="saladstop">
+      <div class="project-thumb"><span class="thumb-brand">SALADSTOP!</span></div>
+      <div class="project-body"><div class="tag">F&amp;B / Localization &amp; Content Strategy</div><h4>SaladStop! Vietnam — Local Relevance at Scale</h4><p>A global healthy-food identity that wasn't translating locally — localized across product, photography and social to drive +18% YoY growth in 2022.</p></div>
+    </button>
   </div>
-  <div class="chip-row">
-    <span class="chip alt">Wellness</span>
-    <span class="chip alt">F&amp;B</span>
-    <span class="chip alt">Education</span>
-    <span class="chip alt">Travel</span>
-    <span class="chip alt">Real Estate</span>
-    <span class="chip alt">Energy</span>
-  </div>
-  <div class="signature-row">
-    <span class="sig-pill">Build The Fit</span>
-    <span class="sig-pill">Fix To Fit</span>
-  </div>
+  <p class="placeholder-note reveal">Click any case study to page through the real deck.</p>
 </section>
 
-<section id="services">
-  <div class="section-label reveal"><div class="dot">A</div><span>Services</span></div>
+<div class="lightbox" id="caseLightbox">
+  <div class="lightbox-backdrop"></div>
+  <div class="lightbox-panel">
+    <button class="lightbox-close" type="button" id="lightboxClose" aria-label="Close">&times;</button>
+    <div class="lightbox-head">
+      <div class="tag" id="lbTag"></div>
+      <h3 id="lbTitle"></h3>
+    </div>
+    <div class="lb-slide-viewer">
+      <div class="lb-slide-frame" id="lbFrame"></div>
+      <button class="lb-arrow prev" type="button" id="lbPrev" aria-label="Previous slide">&#8249;</button>
+      <button class="lb-arrow next" type="button" id="lbNext" aria-label="Next slide">&#8250;</button>
+      <div class="lb-counter" id="lbCounter"></div>
+    </div>
+    <div class="lb-dots" id="lbDots"></div>
+  </div>
+</div>
+
+<section id="services" class="snap-section">
+  <div class="section-label reveal"><div class="dot">D</div><span>Services</span></div>
   <h2 class="section-title reveal">Six service lines, run as one system — not six separate jobs.</h2>
 
   <div class="services-grid">
@@ -501,6 +573,11 @@
     <div class="service-card reveal"><div class="num">05</div><h3>Ecommerce &amp; GMB</h3><p>Optimizing the buying journey: interface, customer flow, and on-platform product design.</p></div>
     <div class="service-card reveal"><div class="num">06</div><h3>Digital &amp; Influencer Marketing</h3><p>KOL networks, campaign data, and growth you can actually measure.</p></div>
   </div>
+</section>
+
+<section id="workframe" class="snap-section">
+  <div class="section-label reveal"><div class="dot">E</div><span>Workframe</span></div>
+  <h2 class="section-title reveal">How each service line actually runs, step by step.</h2>
 
   <div class="wf-tabs reveal">
     <div class="wf-tab-buttons">
@@ -610,50 +687,8 @@
   </div>
 </section>
 
-<section id="portfolio">
-  <div class="section-label reveal"><div class="dot">B</div><span>Portfolio</span></div>
-  <h2 class="section-title reveal">Real project scopes — not just a list of skills.</h2>
-
-  <div class="portfolio-grid">
-    <button class="project-card has-photo reveal" type="button" data-case="gyro">
-      <div class="project-thumb"><img src="portfolio/gyro-republic.jpg" alt="Gyro Republic brand system"></div>
-      <div class="project-body"><div class="tag">F&amp;B / Brand &amp; Marketing Strategy</div><h4>Gyro Republic — Growth &amp; Brand System</h4><p>A 7-store US Halal Mediterranean chain needed one system tying pricing, content, and CRM together — built around a food-forward identity and generation-specific hooks.</p></div>
-    </button>
-    <button class="project-card has-photo reveal" type="button" data-case="starcafe">
-      <div class="project-thumb"><img src="portfolio/starcafe.jpg" alt="StarCafe brand identity system"></div>
-      <div class="project-body"><div class="tag">F&amp;B / Brand Strategy &amp; System Ownership</div><h4>StarCafe — Airport Brand Identity System</h4><p>A Vietnamese airport cafe with inconsistent identity and product categories untouched since 2013 — rebuilt into a bold, instantly local, ready-to-license brand system.</p></div>
-    </button>
-    <button class="project-card has-photo reveal" type="button" data-case="bigbowl">
-      <div class="project-thumb"><img src="portfolio/bigbowl.jpg" alt="BigBowl product and LTO development"></div>
-      <div class="project-body"><div class="tag">F&amp;B / Product Storytelling &amp; LTO Strategy</div><h4>BigBowl — Hero Product &amp; Value Perception</h4><p>Premium airport phở pricing wasn't backed by clear product cues — solved by anchoring the menu on a Wagyu Beef Phở hero product and value-led combo offers.</p></div>
-    </button>
-    <button class="project-card has-photo reveal" type="button" data-case="saladstop">
-      <div class="project-thumb"><img src="portfolio/saladstop.jpg" alt="SaladStop Vietnam content and social strategy"></div>
-      <div class="project-body"><div class="tag">F&amp;B / Localization &amp; Content Strategy</div><h4>SaladStop! Vietnam — Local Relevance at Scale</h4><p>A global healthy-food identity that wasn't translating locally — localized across product, photography and social to drive +18% YoY growth in 2022.</p></div>
-    </button>
-  </div>
-  <p class="placeholder-note reveal">Click any case study to see the full approach.</p>
-</section>
-
-<div class="lightbox" id="caseLightbox">
-  <div class="lightbox-backdrop"></div>
-  <div class="lightbox-panel">
-    <button class="lightbox-close" type="button" id="lightboxClose" aria-label="Close">&times;</button>
-    <img class="lightbox-img" id="lbImg" src="" alt="">
-    <div class="lightbox-body">
-      <div class="tag" id="lbTag"></div>
-      <h3 id="lbTitle"></h3>
-      <p class="lead" id="lbLead"></p>
-      <div class="lb-label">Approach</div>
-      <ul id="lbApproach"></ul>
-      <div class="lb-outcome" id="lbOutcome"></div>
-      <p class="lb-note" id="lbNote"></p>
-    </div>
-  </div>
-</div>
-
-<section id="rates">
-  <div class="section-label reveal"><div class="dot">C</div><span>Rate Card</span></div>
+<section id="rates" class="snap-section">
+  <div class="section-label reveal"><div class="dot">F</div><span>Rate Card</span></div>
   <h2 class="section-title reveal" id="ratesTitle">Pick the working arrangement that fits your project.</h2>
   <div class="rate-grid">
     <div class="rate-card"><div class="rate-label">01 · Strategy &amp; Research</div><div class="rate-num">$8.99<span class="rate-unit">/hr</span></div><div class="rate-turnaround">24-hour quick-win turnaround</div></div>
@@ -734,21 +769,23 @@
   const ctaFlip = document.getElementById('ctaFlip');
   setInterval(()=> ctaFlip.classList.toggle('flipped'), 2800);
 
-  // FIT story sequence: cycle "I need to fix..." lines, then collapse, reveal hook + arrows
+  // FIT story sequence: cycle "I need to fix..." lines, then collapse, reveal hook + arrows.
+  // Loops infinitely: after the arrows hold for ~4s, everything resets and the ticker replays.
   const fitSection = document.getElementById('fit-story');
   const fixLines = document.querySelectorAll('.fix-line');
   const fitTicker = document.querySelector('.fix-ticker');
   const fitLead = document.querySelector('.fit-lead');
   const fitGiant = document.querySelector('.fit-giant-wrap');
   const fitArrows = document.querySelectorAll('.fit-arrows > li');
-  let fitStarted = false;
-  window.__stopFitSequence = () => { fitStarted = true; };
+  let fitRunning = false;
+  window.__stopFitSequence = () => { fitRunning = false; };
 
   function runFitSequence(){
-    if(fitStarted) return;
-    fitStarted = true;
+    if(fitRunning) return;
+    fitRunning = true;
     let i = 0;
     const showNext = () => {
+      if(!fitRunning) return;
       fixLines.forEach(l => l.classList.remove('active'));
       if(i < fixLines.length){
         fixLines[i].classList.add('active');
@@ -762,6 +799,15 @@
             fitGiant.classList.add('show');
             setTimeout(()=>{
               fitArrows.forEach((a, idx)=> setTimeout(()=> a.classList.add('show'), idx*220));
+              // Hold the completed state for ~4s, then reset and loop the whole sequence again.
+              setTimeout(()=>{
+                fitTicker.classList.remove('collapsed');
+                fitLead.classList.remove('show');
+                fitGiant.classList.remove('show');
+                fitArrows.forEach(a => a.classList.remove('show'));
+                fixLines.forEach(l => l.classList.remove('active'));
+                setTimeout(()=>{ i = 0; showNext(); }, 500);
+              }, fitArrows.length*220 + 4000);
             }, 450);
           }, 400);
         }, 500);
@@ -771,7 +817,7 @@
   }
 
   const fitObserver = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ runFitSequence(); fitObserver.disconnect(); } });
+    entries.forEach(e=>{ if(e.isIntersecting){ runFitSequence(); } else { window.__stopFitSequence(); } });
   }, {threshold:.4});
   fitObserver.observe(fitSection);
 
@@ -793,85 +839,89 @@
     });
   });
 
-  // Portfolio case-study lightbox
+  // Portfolio case-study lightbox: swipeable slide viewer over the real Canva deck exports
   const caseData = {
     gyro: {
-      img: 'portfolio/gyro-republic.jpg',
       tag: 'F&amp;B / Brand &amp; Marketing Strategy',
       title: 'Gyro Republic — Growth &amp; Brand System',
-      lead: 'A 7-store US Halal Mediterranean chain running fast, but without a system tying pricing, content, and CRM together — so every channel effort stayed one-off instead of compounding.',
-      approach: [
-        'Diagnosed 6 gaps blocking channel efforts from compounding: brand consistency, pricing strategy, content strategy, product display, CRM, and PR.',
-        'Built a 3-pillar brand system around a food-forward, protein-first visual identity.',
-        'Mapped generation-specific hooks: Gen Z (digital-first), Millennial (O2O-to-D2C), Gen X (traditional, trust-led).',
-        'Built a full awareness-to-retention funnel and a phased 90-day rollout tied to a % of revenue marketing budget.'
-      ],
-      outcome: 'Strategy proposal — precise financial targets kept confidential per client agreement.',
-      note: ''
+      count: 7,
+      prefix: 'portfolio/case-slides/gyro-'
     },
     starcafe: {
-      img: 'portfolio/starcafe.jpg',
       tag: 'F&amp;B / Brand Strategy &amp; System Ownership',
       title: 'StarCafe — Airport Brand Identity System',
-      lead: 'A Vietnamese airport cafe with limited brand recognition, an inconsistent identity, and product categories that hadn\'t been refreshed since 2013 — inside high-transit spaces where visibility and product clarity decide the sale in seconds.',
-      approach: [
-        'Built a full Brand Identity System from the ground up: market research, brand character, look, tone and guidelines.',
-        'Anchored the concept in "As Bold As The Vietnamese," carried across logo lockups, uniforms, packaging and cup design.',
-        'Led New Product Development end-to-end — Vietnamese Baguette, LTO Combo, and Matcha Collection — from shopper input through launch rollout.',
-        'Directed the Social Media System: content planning, copywriting briefs, and output quality control.'
-      ],
-      outcome: 'Reusable identity and campaign system now carried across StarCafe\'s airport touchpoints.',
-      note: 'Brand strategy & system ownership — led end-to-end as Marketing Supervisor, Autogrill VFS.'
+      count: 6,
+      prefix: 'portfolio/case-slides/starcafe-'
     },
     bigbowl: {
-      img: 'portfolio/bigbowl.jpg',
       tag: 'F&amp;B / Product Storytelling &amp; LTO Strategy',
       title: 'BigBowl — Hero Product &amp; Value Perception',
-      lead: 'An authentic phở concept since 2013, but premium airport pricing wasn\'t backed by clear product or quality cues — and a genuinely strong hero product, Wagyu Beef Phở, wasn\'t being used to build distinction.',
-      approach: [
-        'Diagnosed four gaps: category familiarity, value perception, fragmented touchpoints, and an underused hero product.',
-        'Repositioned Wagyu Beef Phở as the product anchor, then built value-led combo offers around it.',
-        'Ran the full Market Signal → Strategic Decision → LTO Development → Campaign Rollout pipeline for seasonal offers.',
-        'Directed digital ordering, social channels, website/SEO and physical brand presence as one connected system.'
-      ],
-      outcome: 'Seasonal product-combo platforms and campaign KV systems now adaptable across menus, airport media, and in-store touchpoints.',
-      note: 'Brand strategy & system ownership — led end-to-end as Marketing Supervisor, Autogrill VFS.'
+      count: 5,
+      prefix: 'portfolio/case-slides/bigbowl-'
     },
     saladstop: {
-      img: 'portfolio/saladstop.jpg',
       tag: 'F&amp;B / Localization &amp; Content Strategy',
       title: 'SaladStop! Vietnam — Local Relevance at Scale',
-      lead: 'SaladStop!\'s global healthy-food identity wasn\'t translating locally — Vietnamese customers needed clearer relevance, not just a "healthy food" label, across three Ho Chi Minh City stores.',
-      approach: [
-        'Diagnosed the gap: limited category awareness, premium price perception, a narrow initial audience, and low local relevance.',
-        'Ran market education, market expansion, and product localization as the three core strategic actions.',
-        'Localized a Korean-inspired menu within SaladStop!\'s wellness positioning for the District 7, Korean-community store.',
-        'Directed photography, copywriting and social content production across the 2022–2023 campaign calendar.'
-      ],
-      outcome: '+18% YoY growth in 2022, with a stronger health-lifestyle association across all three stores.',
-      note: 'Brand & marketing operations — led end-to-end as Marketing Supervisor, Autogrill VFS × MFT Group JV.'
+      count: 5,
+      prefix: 'portfolio/case-slides/saladstop-'
     }
   };
 
   const lightbox = document.getElementById('caseLightbox');
-  const lbImg = document.getElementById('lbImg');
   const lbTag = document.getElementById('lbTag');
   const lbTitle = document.getElementById('lbTitle');
-  const lbLead = document.getElementById('lbLead');
-  const lbApproach = document.getElementById('lbApproach');
-  const lbOutcome = document.getElementById('lbOutcome');
-  const lbNote = document.getElementById('lbNote');
+  const lbFrame = document.getElementById('lbFrame');
+  const lbPrev = document.getElementById('lbPrev');
+  const lbNext = document.getElementById('lbNext');
+  const lbCounter = document.getElementById('lbCounter');
+  const lbDots = document.getElementById('lbDots');
+
+  let activeCase = null;
+  let activeSlide = 0;
+
+  function slidePath(d, n){
+    return `${d.prefix}${String(n).padStart(2,'0')}.jpg`;
+  }
+
+  function renderSlide(){
+    const d = caseData[activeCase];
+    if (!d || !lightbox) return;
+    lbFrame.querySelectorAll('img').forEach(img=> img.classList.toggle('active', Number(img.dataset.i) === activeSlide));
+    lbCounter.textContent = `${activeSlide+1} / ${d.count}`;
+    lbDots.querySelectorAll('button').forEach((btn,idx)=> btn.classList.toggle('active', idx===activeSlide));
+  }
+
+  function goSlide(delta){
+    const d = caseData[activeCase];
+    if (!d) return;
+    activeSlide = (activeSlide + delta + d.count) % d.count;
+    renderSlide();
+  }
 
   function openCase(id){
     const d = caseData[id];
     if (!d || !lightbox) return;
-    lbImg.src = d.img; lbImg.alt = d.title;
+    activeCase = id;
+    activeSlide = 0;
     lbTag.innerHTML = d.tag;
     lbTitle.innerHTML = d.title;
-    lbLead.textContent = d.lead;
-    lbApproach.innerHTML = d.approach.map(a=>`<li>${a}</li>`).join('');
-    lbOutcome.textContent = d.outcome;
-    lbNote.textContent = d.note || '';
+    lbFrame.innerHTML = '';
+    lbDots.innerHTML = '';
+    for(let n=1; n<=d.count; n++){
+      const img = document.createElement('img');
+      img.src = slidePath(d, n);
+      img.alt = `${d.title} — slide ${n}`;
+      img.dataset.i = n-1;
+      if(n===1) img.classList.add('active');
+      lbFrame.appendChild(img);
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.setAttribute('aria-label', `Go to slide ${n}`);
+      if(n===1) dot.classList.add('active');
+      dot.addEventListener('click', ()=>{ activeSlide = n-1; renderSlide(); });
+      lbDots.appendChild(dot);
+    }
+    renderSlide();
     lightbox.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -879,15 +929,23 @@
     if (!lightbox) return;
     lightbox.classList.remove('open');
     document.body.style.overflow = '';
+    activeCase = null;
   }
   document.querySelectorAll('.project-card[data-case]').forEach(card=>{
     card.addEventListener('click', ()=> openCase(card.dataset.case));
   });
+  if (lbPrev) lbPrev.addEventListener('click', ()=> goSlide(-1));
+  if (lbNext) lbNext.addEventListener('click', ()=> goSlide(1));
   const lightboxCloseBtn = document.getElementById('lightboxClose');
   if (lightboxCloseBtn) lightboxCloseBtn.addEventListener('click', closeCase);
   const lightboxBackdrop = lightbox ? lightbox.querySelector('.lightbox-backdrop') : null;
   if (lightboxBackdrop) lightboxBackdrop.addEventListener('click', closeCase);
-  document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape') closeCase(); });
+  document.addEventListener('keydown', (e)=>{
+    if (!activeCase) return;
+    if (e.key === 'Escape') closeCase();
+    if (e.key === 'ArrowRight') goSlide(1);
+    if (e.key === 'ArrowLeft') goSlide(-1);
+  });
 </script>
 
 </body>
