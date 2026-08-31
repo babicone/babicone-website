@@ -88,11 +88,6 @@
   .blob{position:absolute; border-radius:50%; filter:blur(60px); opacity:.55; animation:float 12s ease-in-out infinite;}
   .blob2{width:300px; height:300px; background:var(--maroon); bottom:-80px; left:-60px; animation-delay:3s;}
   @keyframes float{0%,100%{transform:translateY(0) translateX(0);} 50%{transform:translateY(-30px) translateX(20px);}}
-  .hero-corner{
-    position:absolute; inset:0; z-index:0; pointer-events:none;
-    background:radial-gradient(ellipse 900px 700px at -8% -12%, #04070a 0%, #0c2a30 32%, #1c6b78 58%, rgba(141,251,255,0) 100%);
-    opacity:.85;
-  }
 
   /* Desktop: two-column balance so content isn't all bunched left. Mobile keeps the original single-column stack for now. */
   .hero-inner{position:relative; z-index:1;}
@@ -149,7 +144,7 @@
   @keyframes hvStreak{to{transform:rotate(360deg);}}
   .hero-visual-card{
     position:relative; z-index:1; width:100%; height:100%;
-    background:rgba(58,0,34,.9); border:2px solid rgba(141,251,255,.4);
+    background:rgba(255,255,255,.08); border:2px solid rgba(141,251,255,.4);
     border-radius:29px; backdrop-filter:blur(6px);
     display:flex; flex-direction:column; align-items:center; justify-content:center;
     overflow:hidden;
@@ -470,7 +465,6 @@
 </nav>
 
 <header class="hero snap-section">
-  <div class="hero-corner"></div>
   <div class="blob blob2"></div>
   <div class="hero-inner">
     <div class="hero-content">
