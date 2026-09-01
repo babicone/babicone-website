@@ -89,81 +89,31 @@
   .blob2{width:300px; height:300px; background:var(--maroon); bottom:-80px; left:-60px; animation-delay:3s;}
   @keyframes float{0%,100%{transform:translateY(0) translateX(0);} 50%{transform:translateY(-30px) translateX(20px);}}
 
-  /* Desktop: two-column balance so content isn't all bunched left. Mobile keeps the original single-column stack for now. */
-  .hero-inner{position:relative; z-index:1;}
-  .hero-content{max-width:720px;}
+  /* Hero: single centered headline (merged with the old FIT-story section). */
+  .hero-inner{position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; text-align:center; width:100%;}
 
-  .hero-tag{
-    display:inline-block; align-self:flex-start;
-    background:var(--maroon); color:var(--cyan);
-    font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
-    padding:8px 16px; border-radius:999px; margin-bottom:24px;
-    opacity:0; animation:riseInLoop 5.6s ease infinite; animation-delay:.1s;
-  }
-  .hero h1{
+  .hero-headline{
     font-family:var(--font-display); font-weight:400;
-    font-size:clamp(48px, 9vw, 108px);
-    line-height:0.95; letter-spacing:-1px;
+    font-size:clamp(56px, 12vw, 156px);
+    line-height:0.92; letter-spacing:-2px;
   }
-  .hero h1 .h1-build, .hero h1 .h1-fit{opacity:0; animation:riseInLoop 5.6s ease infinite;}
-  .hero h1 .h1-build{animation-delay:.25s;}
-  .hero h1 .h1-fit{animation-delay:.55s;}
+  .hero-headline .h1-build, .hero-headline .h1-fit{opacity:0; animation:riseInLoop 5.6s ease infinite;}
+  .hero-headline .h1-build{animation-delay:.25s;}
+  .hero-headline .h1-fit{animation-delay:.55s;}
   @keyframes riseInLoop{
     0%{opacity:0; transform:translateY(20px);}
     9%{opacity:1; transform:translateY(0);}
     82%{opacity:1; transform:translateY(0);}
     100%{opacity:0; transform:translateY(-8px);}
   }
-  .hero h1 .fit-word{font-family:var(--font-display); font-weight:400;}
-  .hero h1 .hero-quote{color:var(--cyan); opacity:.7; font-size:.55em; vertical-align:.12em;}
-  .hero h1 .end-dot{font-weight:400; color:var(--white);}
-  .hero-punch{
-    max-width:640px; margin-top:20px; font-size:clamp(20px,3vw,32px); font-weight:800; line-height:1.3; opacity:0;
-    animation:riseInLoop 5.6s ease infinite; animation-delay:.85s;
-  }
-  .hero-punch .f-letter{color:var(--maroon); -webkit-text-stroke:2px var(--cyan); font-weight:900;}
-
-  /* Desktop-only right-side visual so the wide layout doesn't read as empty/left-heavy */
-  .hero-visual{display:none;}
-  @media (min-width:901px){
-    .hero-inner{
-      display:grid; grid-template-columns:1.15fr .85fr; align-items:center; gap:32px;
-    }
-    .hero-visual{display:flex; position:relative; justify-content:center; align-items:center; min-height:420px;}
-  }
-  .hero-visual-wrap{
-    position:relative; width:300px; height:300px; border-radius:32px; padding:3px; overflow:hidden;
-    opacity:0; animation:riseIn 1s ease forwards 1.3s, hvBreathe 3.4s ease-in-out infinite 2.3s;
-  }
-  .hero-visual-wrap::before{
-    content:''; position:absolute; top:50%; left:50%; z-index:0;
-    width:800px; height:800px; margin:-400px 0 0 -400px;
-    background:conic-gradient(from 0deg, transparent 0deg, var(--cyan-white) 8deg, var(--cyan) 20deg, transparent 46deg, transparent 360deg);
-    animation:hvStreak 1.5s linear infinite; transform-origin:center;
-  }
-  @keyframes hvStreak{to{transform:rotate(360deg);}}
-  .hero-visual-card{
-    position:relative; z-index:1; width:100%; height:100%;
-    background:rgba(255,255,255,.08); border:2px solid rgba(141,251,255,.4);
-    border-radius:29px; backdrop-filter:blur(6px);
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    overflow:hidden;
-  }
-  .hero-visual-card::before{
-    content:''; position:absolute; inset:-30px; border-radius:50%;
-    border:2px dashed rgba(141,251,255,.35);
-    animation:hvSpin 16s linear infinite; pointer-events:none; z-index:-1;
-  }
-  .hero-visual-card::after{
-    content:''; position:absolute; inset:-52px; border-radius:50%;
-    border:1px dotted rgba(141,251,255,.2);
-    animation:hvSpin 24s linear infinite reverse; pointer-events:none; z-index:-1;
-  }
-  @keyframes hvSpin{to{transform:rotate(360deg);}}
-  @keyframes hvBreathe{0%,100%{transform:translateY(0) scale(1);} 50%{transform:translateY(0) scale(1.05);}}
-  .hero-visual-card .hv-quote{font-size:56px; font-weight:900; color:var(--cyan); opacity:.7; line-height:1;}
-  .hero-visual-card .hv-fit{font-family:var(--font-display); font-weight:400; font-size:88px; letter-spacing:-1px; line-height:.9;}
-  .hero-visual-card .hv-tag{margin-top:14px; font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--cyan);}
+  .fit-word-wrap{position:relative; display:inline-block;}
+  .hero-headline .fit-word{font-family:var(--font-display); font-weight:400;}
+  .hero-headline .hero-quote{color:var(--cyan); opacity:.7; font-size:.5em; vertical-align:.14em;}
+  .hero-headline .end-dot{font-weight:400; color:var(--white);}
+  .fit-word-wrap .sparkle{position:absolute; color:var(--cyan-white); font-size:.18em; opacity:0; animation:sparkleTwinkle 2.6s ease-in-out infinite;}
+  .fit-word-wrap .sparkle.s1{top:-6%; left:-16%; animation-delay:.2s;}
+  .fit-word-wrap .sparkle.s2{top:4%; right:-14%; animation-delay:1s;}
+  .fit-word-wrap .sparkle.s3{bottom:-10%; left:46%; font-size:.13em; animation-delay:1.8s;}
   .btn-primary{
     background:var(--maroon); color:var(--cyan); font-weight:700; font-size:15px;
     padding:16px 32px; border-radius:999px; display:inline-flex; align-items:center; gap:8px;
@@ -176,7 +126,6 @@
     padding:14px 30px; border-radius:999px; transition:.25s ease;
   }
   .btn-ghost:hover{background:var(--white); color:var(--pink-deep);}
-  @keyframes riseIn{from{opacity:0; transform:translateY(24px);} to{opacity:1; transform:translateY(0);}}
 
   .scroll-cue{
     position:absolute; bottom:36px; left:48px; font-size:12px; letter-spacing:2px; font-weight:700;
@@ -195,88 +144,28 @@
   .reveal{opacity:0; transform:translateY(32px); transition:opacity .7s ease, transform .7s ease;}
   .reveal.in{opacity:1; transform:translateY(0);}
 
-  /* ---------- FIT story ---------- */
-  #fit-story{padding-top:40px; padding-bottom:100px; text-align:center;}
-  #fit-story.snap-section{padding-top:0; padding-bottom:0; justify-content:center;}
-  .fix-ticker{
-    position:relative; height:52px; max-width:720px; margin:0 auto;
-    transition:opacity .5s ease, transform .5s ease, height .5s ease, margin .5s ease;
-  }
-  .fix-ticker.collapsed{opacity:.4; transform:scale(.72); height:30px; margin-bottom:-10px;}
-  .fix-line{
-    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-    font-size:clamp(18px,2.6vw,26px); font-weight:600; font-style:italic; opacity:0;
-    transition:opacity .35s ease, transform .35s ease; transform:translateY(6px);
-  }
-  .fix-line.active{opacity:1; transform:translateY(0);}
-  .fit-lead{
-    max-width:600px; margin:44px auto 0; font-size:clamp(14px,1.3vw,16px); font-weight:600; font-style:italic; opacity:0;
-    transform:translateY(14px); transition:opacity .6s ease, transform .6s ease;
-  }
-  .fit-lead.show{opacity:.5; transform:translateY(0);}
-
-  .fit-giant-wrap{
-    margin-top:22px; opacity:0; transform:scale(.82); position:relative;
-    transition:opacity .7s cubic-bezier(.2,.8,.2,1), transform .7s cubic-bezier(.2,.8,.2,1);
-  }
-  .fit-giant-wrap.show{opacity:1; transform:scale(1);}
-  .fit-giant{display:flex; align-items:center; justify-content:center; gap:8px; position:relative;}
-  .quote-mark{font-size:clamp(40px,7vw,84px); font-weight:900; color:var(--cyan); opacity:.85; line-height:1; align-self:flex-start;}
-  .fit-word-giant{font-size:clamp(76px,15vw,180px); letter-spacing:-4px; line-height:.9;}
-  .fit-sub{margin-top:10px; font-size:clamp(16px,2vw,20px); font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--cyan);}
-  .sparkle{position:absolute; color:var(--cyan-white); font-size:22px; opacity:0; animation:sparkleTwinkle 2.6s ease-in-out infinite;}
-  .sparkle.s1{top:6%; left:14%; animation-delay:.2s;}
-  .sparkle.s2{top:18%; right:10%; animation-delay:1s;}
-  .sparkle.s3{bottom:10%; left:44%; animation-delay:1.8s; font-size:16px;}
   @keyframes sparkleTwinkle{0%,100%{opacity:0; transform:scale(.4) rotate(0deg);} 50%{opacity:1; transform:scale(1) rotate(90deg);}}
-
-  .fit-arrows{
-    list-style:none; margin:60px auto 0; max-width:900px; padding:0;
-    display:flex; flex-direction:row; flex-wrap:wrap; align-items:center; justify-content:center; gap:10px;
-  }
-  .fit-connector{
-    color:var(--cyan); font-weight:900; font-size:22px; opacity:0; transition:opacity .4s ease .1s; flex:none;
-  }
-  .fit-connector.show{opacity:1;}
-  .fit-card{
-    position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;
-    width:190px; height:190px; padding:18px; border-radius:50%; border:2px solid rgba(141,251,255,.4);
-    background:rgba(58,0,34,.9); backdrop-filter:blur(6px);
-    opacity:0; transform:translateY(16px) scale(.85); transition:opacity .5s ease, transform .5s ease;
-  }
-  .fit-card::before{
-    content:''; position:absolute; inset:-14px; border-radius:50%;
-    border:2px dashed rgba(141,251,255,.3); animation:hvSpin 18s linear infinite; pointer-events:none; z-index:-1;
-  }
-  .fit-card::after{
-    content:''; position:absolute; inset:-26px; border-radius:50%;
-    border:1px dotted rgba(141,251,255,.18); animation:hvSpin 26s linear infinite reverse; pointer-events:none; z-index:-1;
-  }
-  .fit-card.show{opacity:1; transform:translateY(0) scale(1);}
-  .fit-card-badge{font-family:var(--font-display); font-weight:400; font-size:32px; letter-spacing:-.5px; line-height:1; color:var(--cyan);}
-  .fit-card-label{font-size:12.5px; font-weight:700; text-align:center; line-height:1.35; color:var(--white); opacity:.9;}
-
-  @media (max-width:640px){
-    .fit-arrows{flex-direction:column;}
-    .fit-connector{transform:rotate(90deg);}
-    .fit-card{width:230px; height:230px;}
-  }
 
   /* ---------- Services ---------- */
   #services{background:var(--pink);}
-  #services.snap-section, #workframe.snap-section{justify-content:center;}
-  #workframe{background:var(--pink);}
-  .services-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
-  .service-card{background:var(--maroon); border-radius:18px; padding:28px 24px; min-height:190px; position:relative; overflow:hidden; transition:transform .3s ease, background .3s ease;}
-  .service-card:hover{transform:translateY(-8px); background:var(--maroon-deep);}
-  .service-card .num{font-size:13px; font-weight:800; color:var(--cyan); opacity:.7;}
-  .service-card h3{font-size:20px; font-weight:800; margin:14px 0 10px; line-height:1.25;}
-  .service-card p{font-size:13.5px; line-height:1.6; opacity:.8;}
-  .service-card::after{content:''; position:absolute; width:120px; height:120px; border-radius:50%; background:var(--cyan); opacity:.08; right:-40px; bottom:-40px; transition:transform .4s ease;}
-  .service-card:hover::after{transform:scale(1.4);}
 
-  .wf-tabs{margin-top:64px;}
-  #workframe .wf-tabs{margin-top:0;}
+  /* "Ô màu vàng" — dynamic highlight box: shows the matching service description
+     for whichever workframe tab is active/hovered. Default = Strategy & Research. */
+  .wf-highlight{
+    position:relative; border:2px solid #ffd23f; border-radius:18px;
+    background:rgba(255,210,63,.07); padding:20px 26px; margin-bottom:22px;
+    display:flex; align-items:baseline; gap:12px;
+  }
+  .wf-highlight-arrow{color:var(--cyan); font-weight:900; font-size:clamp(20px,2.2vw,28px); flex:none;}
+  .wf-highlight-text{
+    font-weight:800; font-style:italic; opacity:.96; color:var(--white);
+    font-size:clamp(17px,2.1vw,26px); line-height:1.35;
+    animation:wfPulse 3.4s ease-in-out infinite;
+  }
+  .wf-highlight-text .tw-cursor{display:inline-block; width:2px; height:.85em; margin-left:1px; vertical-align:-2px; background:var(--cyan); animation:twBlink .8s steps(1) infinite;}
+  @keyframes wfPulse{0%,100%{opacity:.96;} 50%{opacity:.7;}}
+
+  .wf-tabs{margin-top:0;}
   .wf-tab-buttons{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px;}
   .wf-tab-btn{background:rgba(255,255,255,.14); color:var(--white); font-weight:800; font-size:12.5px; letter-spacing:.4px; padding:12px 20px; border-radius:999px; border:2px solid transparent; transition:.25s ease; cursor:pointer; font-family:inherit;}
   .wf-tab-btn:hover{background:rgba(255,255,255,.22);}
@@ -288,18 +177,18 @@
   .wf-col{padding:0 16px; border-left:1px solid rgba(255,255,255,.12);}
   .wf-col:first-child{border-left:none;}
   .wf-col .wf-num{font-size:30px; font-weight:900; color:var(--white); opacity:.9;}
-  .wf-col .wf-q{color:var(--cyan); font-weight:800; font-size:14px; text-transform:uppercase; margin:6px 0 12px;}
+  .wf-col .wf-q{color:var(--cyan); font-family:var(--font-display); font-weight:400; font-size:15px; letter-spacing:.5px; text-transform:uppercase; margin:6px 0 12px;}
   .wf-col ul{list-style:none; font-size:11.5px; line-height:2; opacity:.75;}
 
   .wf-quad{display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
   .wf-quad-item{padding:22px; border-radius:14px; background:rgba(255,255,255,.06);}
-  .wf-quad-item h4{color:var(--cyan); font-size:15px; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;}
+  .wf-quad-item h4{color:var(--cyan); font-family:var(--font-display); font-weight:400; font-size:16px; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;}
   .wf-quad-item p{font-size:12.5px; line-height:1.6; opacity:.75;}
 
   .wf-ux-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:28px;}
   .wf-ux-col{padding:0 16px; border-left:1px solid rgba(255,255,255,.12);}
   .wf-ux-col:first-child{border-left:none;}
-  .wf-ux-col .wf-q{color:var(--cyan); font-weight:800; font-size:14px; text-transform:uppercase; margin-bottom:8px;}
+  .wf-ux-col .wf-q{color:var(--cyan); font-family:var(--font-display); font-weight:400; font-size:15px; letter-spacing:.5px; text-transform:uppercase; margin-bottom:8px;}
   .wf-ux-col .wf-question{font-size:12px; opacity:.65; font-style:italic; margin-bottom:10px; line-height:1.4;}
   .wf-ux-col ul{list-style:none; font-size:11.5px; line-height:2; opacity:.75;}
   .wf-neuro-row{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; padding-top:24px; border-top:1px solid rgba(255,255,255,.12);}
@@ -310,12 +199,12 @@
 
   /* ---------- Portfolio ---------- */
   #portfolio{background:var(--maroon-deep);}
-  #portfolio.snap-section{justify-content:center;}
-  #portfolio.snap-section .section-title{margin-bottom:32px;}
-  #portfolio.snap-section .project-thumb{height:140px;}
-  #portfolio.snap-section .project-body{padding:16px 20px 18px;}
-  #portfolio.snap-section .placeholder-note{margin-top:16px;}
-  .portfolio-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:24px;}
+  #portfolio.snap-section .section-title{margin-bottom:22px;}
+  #portfolio.snap-section .project-thumb{height:130px;}
+  #portfolio.snap-section .project-body{padding:14px 18px 16px;}
+  #portfolio.snap-section .placeholder-note{margin-top:12px;}
+  .portfolio-title{font-family:var(--font-display); font-weight:400; letter-spacing:-.5px; line-height:1.05;}
+  .portfolio-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
   .project-card{border-radius:20px; overflow:hidden; background:var(--maroon); transition:transform .35s ease; cursor:pointer; border:none; text-align:left; font-family:inherit; color:inherit; padding:0; display:block; width:100%;}
   .project-card:hover{transform:translateY(-10px);}
   .project-thumb{
@@ -384,30 +273,31 @@
   .lb-body .lb-outcome{background:rgba(141,251,255,.08); border:1px solid rgba(141,251,255,.3); border-radius:14px; padding:16px 18px; font-size:13px; line-height:1.6;}
   .lb-body .lb-note{margin-top:16px; font-size:11.5px; opacity:.55; font-style:italic;}
 
-  /* ---------- Rate card teaser ---------- */
-  #rates{background:var(--pink);}
-  #rates.snap-section{justify-content:center;}
-  .typewriter-cursor{display:inline-block; width:3px; height:.85em; margin-left:2px; vertical-align:-2px; background:var(--cyan); animation:twBlink .8s steps(1) infinite;}
-  @keyframes twBlink{50%{opacity:0;}}
-  .rate-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; perspective:1200px;}
-  .rate-card{
-    background:var(--maroon); border-radius:18px; padding:26px 20px; text-align:center;
-    transform-style:preserve-3d; opacity:0; transform:rotateY(-90deg);
-    transition:opacity .6s ease, transform .7s cubic-bezier(.34,1.56,.64,1);
+  /* ---------- Quotation lightbox ---------- */
+  .quote-panel{max-width:520px;}
+  .quote-form{padding:22px 28px 28px; display:flex; flex-direction:column; gap:16px;}
+  .qf-row{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .quote-form label{display:flex; flex-direction:column; gap:6px; font-size:12px; font-weight:800; letter-spacing:.5px; text-transform:uppercase; opacity:.85; color:var(--cyan);}
+  .qf-optional{text-transform:none; font-weight:600; opacity:.6; letter-spacing:0;}
+  .quote-form input, .quote-form select, .quote-form textarea{
+    font-family:inherit; font-size:14px; font-weight:600; color:var(--white); text-transform:none; letter-spacing:normal;
+    background:rgba(255,255,255,.08); border:1px solid rgba(141,251,255,.3); border-radius:10px;
+    padding:12px 14px; outline:none; transition:border-color .2s ease, background .2s ease;
   }
-  .rate-card:nth-child(1){transition-delay:0s;}
-  .rate-card:nth-child(2){transition-delay:.09s;}
-  .rate-card:nth-child(3){transition-delay:.18s;}
-  .rate-card:nth-child(4){transition-delay:.27s;}
-  .rate-card:nth-child(5){transition-delay:.36s;}
-  .rate-card:nth-child(6){transition-delay:.45s;}
-  .rate-card.flip-in{opacity:1; transform:rotateY(0deg);}
-  .rate-card.flip-in:hover{transform:translateY(-6px) rotateY(0deg);}
-  .rate-card .rate-label{font-size:12px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; opacity:.8;}
-  .rate-card .rate-num{font-size:32px; font-weight:900; color:var(--cyan); margin-top:12px;}
-  .rate-card .rate-unit{font-size:13px; font-weight:700; opacity:.65; margin-left:1px;}
-  .rate-card .rate-turnaround{margin-top:10px; font-size:11px; opacity:.6; line-height:1.4;}
-  .rate-note{margin-top:24px; font-size:12.5px; opacity:.65; text-align:center;}
+  .quote-form input::placeholder, .quote-form textarea::placeholder{color:rgba(255,255,255,.4);}
+  .quote-form input:focus, .quote-form select:focus, .quote-form textarea:focus{border-color:var(--cyan); background:rgba(255,255,255,.13);}
+  .quote-form select{appearance:auto; cursor:pointer;}
+  .quote-form textarea{resize:vertical; min-height:70px;}
+  .qf-phone-group{display:flex; gap:8px;}
+  .qf-phone-group select{flex:0 0 108px;}
+  .qf-phone-group input{flex:1;}
+  .qf-notes{grid-column:1/-1;}
+  .qf-submit{justify-content:center; width:100%; margin-top:4px;}
+  .qf-hint{font-size:11px; opacity:.5; text-align:center; margin-top:-6px;}
+  @media (max-width:520px){ .qf-row{grid-template-columns:1fr;} }
+
+  .typewriter-cursor, .tw-cursor{display:inline-block; width:2px; height:.85em; margin-left:1px; vertical-align:-2px; background:var(--cyan); animation:twBlink .8s steps(1) infinite;}
+  @keyframes twBlink{50%{opacity:0;}}
 
   /* ---------- Contact CTA ---------- */
   #contact{background:var(--maroon-deep); text-align:center; padding:140px 48px; position:relative; overflow:hidden;}
@@ -421,7 +311,7 @@
   footer{background:var(--maroon-deep); text-align:center; padding:28px; font-size:12px; opacity:.5; border-top:1px solid rgba(255,255,255,.08);}
 
   @media (max-width:900px){
-    .services-grid, .portfolio-grid{grid-template-columns:repeat(2,1fr);}
+    .portfolio-grid{grid-template-columns:repeat(2,1fr);}
     .workframe-strip{grid-template-columns:repeat(3,1fr); row-gap:24px;}
     .wf-col{border-left:none; border-top:1px solid rgba(255,255,255,.12); padding-top:16px;}
     .wf-col:nth-child(3n+1){border-left:none;}
@@ -429,7 +319,6 @@
     .wf-ux-grid, .wf-neuro-row{grid-template-columns:1fr; row-gap:20px;}
     .wf-ux-col{border-left:none; border-top:1px solid rgba(255,255,255,.12); padding-top:16px;}
     .wf-ux-col:first-child{border-top:none; padding-top:0;}
-    .rate-grid{grid-template-columns:repeat(2,1fr);}
     nav ul{display:none;}
   }
 
@@ -437,26 +326,36 @@
   @media (min-width:901px){
     html{scroll-snap-type:y mandatory;}
     .snap-section{
-      min-height:100vh; height:100vh; display:flex; flex-direction:column; justify-content:center;
+      min-height:100vh; height:100vh; display:flex; flex-direction:column; justify-content:flex-start;
       scroll-snap-align:start; scroll-snap-stop:always; overflow-y:auto; overflow-x:hidden;
-      padding-top:96px; padding-bottom:36px;
+      padding-top:88px; padding-bottom:24px;
     }
+    /* Content-light sections (just a centered headline) can stay vertically centered safely —
+       there's no overflow risk, so centering here can't hide a top/bottom edge. */
+    header.hero.snap-section{justify-content:center;}
     .snap-section > *{width:100%;}
-    .snap-section .section-title{margin-bottom:36px;}
+    .snap-section .section-title{margin-bottom:24px;}
+  }
+
+  /* Shorter laptop screens (browser at 100% zoom often lands here): trim further so nothing
+     gets clipped top/bottom without needing to scroll inside a section. */
+  @media (min-width:901px) and (max-height:820px){
+    .snap-section{padding-top:76px; padding-bottom:16px;}
+    .snap-section .section-title{margin-bottom:18px; font-size:clamp(26px,4vw,44px);}
+    .hero-headline{font-size:clamp(48px,10vw,120px);}
   }
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="logo">Babicone</div>
+  <div class="logo">Brand Chaos Fixer</div>
   <ul>
     <li><a href="#services">SERVICES</a></li>
     <li><a href="#portfolio">CREDENTIALS</a></li>
-    <li><a href="#rates">MY RATECARD</a></li>
     <li><a href="timetracker/">TIME TRACKER</a></li>
   </ul>
-  <a href="#contact" class="cta-flip" id="ctaFlip">
+  <a href="#" class="cta-flip" id="ctaFlip">
     <span class="flip-inner">
       <span class="flip-face flip-front"><b>1</b> FREE CONSULTANT</span>
       <span class="flip-face flip-back"><b>2</b> I NEED QUOTATION</span>
@@ -467,63 +366,20 @@
 <header class="hero snap-section">
   <div class="blob blob2"></div>
   <div class="hero-inner">
-    <div class="hero-content">
-      <div class="hero-tag">Brand Chaos Fixer</div>
-      <h1><span class="h1-build">BUILD<br>THE</span> <span class="h1-fit"><span class="hero-quote">"</span><span class="fit-word grad-text">FIT</span><span class="hero-quote">"</span><span class="end-dot">.</span></span></h1>
-      <p class="hero-punch">Every business problem starts with <span class="f-letter">F</span>.</p>
-    </div>
-    <div class="hero-visual">
-      <div class="hero-visual-wrap">
-        <div class="hero-visual-card">
-          <span class="hv-quote">"</span>
-          <span class="hv-fit grad-text">FIT</span>
-          <span class="hv-tag">is all you need</span>
-        </div>
-      </div>
-    </div>
+    <h1 class="hero-headline">
+      <span class="h1-build">BUILD<br>THE</span>
+      <span class="h1-fit fit-word-wrap">
+        <span class="hero-quote">"</span><span class="fit-word grad-text shine">FIT</span><span class="hero-quote">"</span><span class="end-dot">.</span>
+        <span class="sparkle s1">✦</span><span class="sparkle s2">✧</span><span class="sparkle s3">✦</span>
+      </span>
+    </h1>
   </div>
   <div class="scroll-cue"><div class="line"></div>SCROLL</div>
 </header>
 
-<section id="fit-story" class="snap-section">
-  <div class="fix-ticker">
-    <span class="fix-line">"I need to fix everything."</span>
-    <span class="fix-line">"I need my Ad more creative."</span>
-    <span class="fix-line">"I need more designers."</span>
-    <span class="fix-line">"I need better workflow."</span>
-    <span class="fix-line">"I need to fix my calendar."</span>
-  </div>
-  <p class="fit-lead">You see? You can't fix everything you see in your business as a problem.</p>
-
-  <div class="fit-giant-wrap">
-    <div class="fit-giant">
-      <span class="quote-mark">"</span><span class="fit-word-giant grad-text shine">FIT</span><span class="quote-mark">"</span>
-      <span class="sparkle s1">✦</span><span class="sparkle s2">✧</span><span class="sparkle s3">✦</span>
-    </div>
-    <p class="fit-sub">is all you need.</p>
-  </div>
-
-  <ul class="fit-arrows">
-    <li class="fit-card">
-      <span class="fit-card-badge">FIT</span>
-      <span class="fit-card-label">the market size</span>
-    </li>
-    <li class="fit-connector">→</li>
-    <li class="fit-card">
-      <span class="fit-card-badge">FIT</span>
-      <span class="fit-card-label">the customers' needs</span>
-    </li>
-    <li class="fit-connector">→</li>
-    <li class="fit-card">
-      <span class="fit-card-badge">FIT</span>
-      <span class="fit-card-label">the scale of your business</span>
-    </li>
-  </ul>
-</section>
-
 <section id="portfolio" class="snap-section">
-  <div class="section-label reveal"><div class="dot">C</div><span>Portfolio</span></div>
-  <h2 class="section-title reveal">Real project scopes — not just a list of skills.</h2>
+  <div class="section-label reveal"><div class="dot">A</div><span>Show Case</span></div>
+  <h2 class="section-title reveal portfolio-title">Real project scopes — <span class="grad-text shine">not just a list.</span></h2>
 
   <div class="portfolio-grid">
     <button class="project-card reveal" type="button" data-case="gyro">
@@ -572,22 +428,13 @@
 </div>
 
 <section id="services" class="snap-section">
-  <div class="section-label reveal"><div class="dot">D</div><span>Services</span></div>
-  <h2 class="section-title reveal">Six service lines, run as one system — not six separate jobs.</h2>
-
-  <div class="services-grid">
-    <div class="service-card reveal"><div class="num">01</div><h3>Strategy &amp; Research</h3><p>Market audits and brand positioning to find the fit before any campaign begins.</p></div>
-    <div class="service-card reveal"><div class="num">02</div><h3>Brand Identity &amp; Guidelines</h3><p>Naming, tone of voice, and a visual identity system — built once, used consistently.</p></div>
-    <div class="service-card reveal"><div class="num">03</div><h3>Brand Management &amp; Operations</h3><p>Running multi-campaign timelines, budgets, and weekly quality control.</p></div>
-    <div class="service-card reveal"><div class="num">04</div><h3>Copy &amp; Visual Production</h3><p>Not just words and images — ideas rendered into a visual language of their own.</p></div>
-    <div class="service-card reveal"><div class="num">05</div><h3>Ecommerce &amp; GMB</h3><p>Optimizing the buying journey: interface, customer flow, and on-platform product design.</p></div>
-    <div class="service-card reveal"><div class="num">06</div><h3>Digital &amp; Influencer Marketing</h3><p>KOL networks, campaign data, and growth you can actually measure.</p></div>
-  </div>
-</section>
-
-<section id="workframe" class="snap-section">
-  <div class="section-label reveal"><div class="dot">E</div><span>Workframe</span></div>
+  <div class="section-label reveal"><div class="dot">B</div><span>Services &amp; Workframe</span></div>
   <h2 class="section-title reveal">How each service line actually runs, step by step.</h2>
+
+  <div class="wf-highlight reveal">
+    <span class="wf-highlight-arrow">&rarr;</span>
+    <span class="wf-highlight-text" id="wfHighlightText"></span>
+  </div>
 
   <div class="wf-tabs reveal">
     <div class="wf-tab-buttons">
@@ -693,22 +540,8 @@
       </div>
     </div>
 
-    <p class="wf-caption" id="wfCaption">Workframe: Strategy &amp; Research — full breakdown available in the detailed rate card</p>
+    <p class="wf-caption" id="wfCaption">Workframe: Strategy &amp; Research</p>
   </div>
-</section>
-
-<section id="rates" class="snap-section">
-  <div class="section-label reveal"><div class="dot">F</div><span>Rate Card</span></div>
-  <h2 class="section-title reveal" id="ratesTitle">Pick the working arrangement that fits your project.</h2>
-  <div class="rate-grid">
-    <div class="rate-card"><div class="rate-label">01 · Strategy &amp; Research</div><div class="rate-num">$8.99<span class="rate-unit">/hr</span></div><div class="rate-turnaround">24-hour quick-win turnaround</div></div>
-    <div class="rate-card"><div class="rate-label">02 · Brand Identity &amp; Guidelines</div><div class="rate-num">$11.99<span class="rate-unit">/hr</span></div><div class="rate-turnaround">96-hour flagship turnaround</div></div>
-    <div class="rate-card"><div class="rate-label">03 · Brand Mgmt &amp; Operations</div><div class="rate-num">$7.99<span class="rate-unit">/hr</span></div><div class="rate-turnaround">3.5 hrs/day, 7 days/week</div></div>
-    <div class="rate-card"><div class="rate-label">04 · Copy &amp; Visual Production</div><div class="rate-num">$42.99<span class="rate-unit">/artwork</span></div><div class="rate-turnaround">3.5-hour production turnaround</div></div>
-    <div class="rate-card"><div class="rate-label">05 · Ecommerce &amp; GMB</div><div class="rate-num" style="font-size:21px; padding-top:6px;">Custom quote</div><div class="rate-turnaround">Project-based — after a short 1:1 consult</div></div>
-    <div class="rate-card"><div class="rate-label">06 · Digital &amp; Influencer</div><div class="rate-num" style="font-size:21px; padding-top:6px;">Custom quote</div><div class="rate-turnaround">Project-based — after a short 1:1 consult</div></div>
-  </div>
-  <p class="rate-note reveal">* Rates are pulled directly from the studio rate card. Ecommerce &amp; GMB and Digital &amp; Influencer Marketing are scoped after a short discovery call rather than billed hourly.</p>
 </section>
 
 <section id="contact">
@@ -716,10 +549,62 @@
   <div class="contact-ring ring2"></div>
   <h2>Got a project that needs fixing from the ground up?</h2>
   <p>Send your brief or book a quick call — I'll get back to you within 24h.</p>
-  <a href="#" class="btn-primary big">Get a Project Quote →</a>
+  <a href="#" class="btn-primary big" id="contactQuoteBtn">I Need a Quotation →</a>
 </section>
 
 <footer>© Babicone — Brand Chaos Fixer. Demo layout, illustrative content.</footer>
+
+<div class="lightbox" id="quoteLightbox">
+  <div class="lightbox-backdrop"></div>
+  <div class="lightbox-panel quote-panel">
+    <button class="lightbox-close" type="button" id="quoteClose" aria-label="Close">&times;</button>
+    <div class="lightbox-head">
+      <div class="tag">Let's talk</div>
+      <h3>I need a quotation</h3>
+    </div>
+    <form class="quote-form" id="quoteForm">
+      <div class="qf-row">
+        <label>Ur Call
+          <select name="call" required>
+            <option value="Ms">Ms.</option>
+            <option value="Mr">Mr.</option>
+            <option value="Mrs">Mrs.</option>
+          </select>
+        </label>
+        <label>Ur Name
+          <input type="text" name="name" placeholder="Your full name" required>
+        </label>
+      </div>
+      <div class="qf-row">
+        <label class="qf-phone">Ur Number
+          <div class="qf-phone-group">
+            <select name="phoneCode" aria-label="Country code">
+              <option value="+84" selected>+84 VN</option>
+              <option value="+1">+1 US/CA</option>
+              <option value="+44">+44 UK</option>
+              <option value="+61">+61 AU</option>
+              <option value="+65">+65 SG</option>
+              <option value="+82">+82 KR</option>
+              <option value="+81">+81 JP</option>
+              <option value="+86">+86 CN</option>
+              <option value="+33">+33 FR</option>
+              <option value="+49">+49 DE</option>
+            </select>
+            <input type="tel" name="phone" placeholder="Phone number" required>
+          </div>
+        </label>
+        <label>Ur Email
+          <input type="email" name="email" placeholder="you@company.com" required>
+        </label>
+      </div>
+      <label class="qf-notes">Ur Notes <span class="qf-optional">(optional)</span>
+        <textarea name="notes" rows="3" placeholder="Tell me a bit about the project…"></textarea>
+      </label>
+      <button type="submit" class="btn-primary qf-submit">Send Request →</button>
+      <p class="qf-hint">Opens your email app, addressed to Babicone — nothing is sent from here directly.</p>
+    </form>
+  </div>
+</div>
 
 <script>
   // Scroll-reveal for standard blocks
@@ -728,45 +613,33 @@
     entries.forEach(e=>{
       if(e.isIntersecting){
         e.target.classList.add('in');
-        if(e.target.id === 'ratesTitle') typewriterReveal(e.target);
         io.unobserve(e.target);
       }
     });
   }, {threshold:.15});
   revealEls.forEach(el=>io.observe(el));
 
-  // Rate card teaser: typewriter effect on the heading
-  function typewriterReveal(el){
-    const text = el.textContent;
+  // Generic letter-by-letter typewriter reveal — reused by the Services & Workframe highlight box.
+  let twToken = 0;
+  function typewriterReveal(el, text){
+    const src = text != null ? text : el.textContent;
+    const myToken = ++twToken;
     el.textContent = '';
     const cursor = document.createElement('span');
-    cursor.className = 'typewriter-cursor';
+    cursor.className = 'tw-cursor';
     el.appendChild(cursor);
     let i = 0;
     const step = () => {
-      if(i < text.length){
-        cursor.insertAdjacentText('beforebegin', text[i]);
+      if (myToken !== twToken) return; // a newer reveal started — stop this one
+      if(i < src.length){
+        cursor.insertAdjacentText('beforebegin', src[i]);
         i++;
-        setTimeout(step, 26);
+        setTimeout(step, 18);
       } else {
-        setTimeout(()=> cursor.remove(), 900);
+        setTimeout(()=>{ if (myToken === twToken) cursor.remove(); }, 900);
       }
     };
     step();
-  }
-
-  // Rate card teaser: flip-in reveal for the 4 pricing boxes
-  const rateGrid = document.querySelector('.rate-grid');
-  if(rateGrid){
-    const rateObserver = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{
-        if(e.isIntersecting){
-          e.target.querySelectorAll('.rate-card').forEach(c=>c.classList.add('flip-in'));
-          rateObserver.unobserve(e.target);
-        }
-      });
-    }, {threshold:.2});
-    rateObserver.observe(rateGrid);
   }
 
   // Nav background intensify on scroll
@@ -775,79 +648,43 @@
     nav.style.background = window.scrollY > 60 ? 'rgba(83,0,47,0.9)' : 'rgba(235,53,156,0.85)';
   });
 
-  // Nav CTA auto-flip: FREE CONSULTANT <-> I NEED QUOTATION
+  // Nav CTA auto-flip: FREE CONSULTANT <-> I NEED QUOTATION; clicking either face opens the quotation form.
   const ctaFlip = document.getElementById('ctaFlip');
   setInterval(()=> ctaFlip.classList.toggle('flipped'), 2800);
-
-  // FIT story sequence: cycle "I need to fix..." lines, then collapse, reveal hook + arrows.
-  // Loops infinitely: after the arrows hold for ~4s, everything resets and the ticker replays.
-  const fitSection = document.getElementById('fit-story');
-  const fixLines = document.querySelectorAll('.fix-line');
-  const fitTicker = document.querySelector('.fix-ticker');
-  const fitLead = document.querySelector('.fit-lead');
-  const fitGiant = document.querySelector('.fit-giant-wrap');
-  const fitArrows = document.querySelectorAll('.fit-arrows > li');
-  let fitRunning = false;
-  window.__stopFitSequence = () => { fitRunning = false; };
-
-  function runFitSequence(){
-    if(fitRunning) return;
-    fitRunning = true;
-    let i = 0;
-    const showNext = () => {
-      if(!fitRunning) return;
-      fixLines.forEach(l => l.classList.remove('active'));
-      if(i < fixLines.length){
-        fixLines[i].classList.add('active');
-        i++;
-        setTimeout(showNext, 850);
-      } else {
-        fitTicker.classList.add('collapsed');
-        setTimeout(()=>{
-          fitLead.classList.add('show');
-          setTimeout(()=>{
-            fitGiant.classList.add('show');
-            setTimeout(()=>{
-              fitArrows.forEach((a, idx)=> setTimeout(()=> a.classList.add('show'), idx*220));
-              // Hold the completed state for ~4s, then reset and loop the whole sequence again.
-              setTimeout(()=>{
-                fitTicker.classList.remove('collapsed');
-                fitLead.classList.remove('show');
-                fitGiant.classList.remove('show');
-                fitArrows.forEach(a => a.classList.remove('show'));
-                fixLines.forEach(l => l.classList.remove('active'));
-                setTimeout(()=>{ i = 0; showNext(); }, 500);
-              }, fitArrows.length*220 + 4000);
-            }, 450);
-          }, 400);
-        }, 500);
-      }
-    };
-    showNext();
-  }
-
-  const fitObserver = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ runFitSequence(); } else { window.__stopFitSequence(); } });
-  }, {threshold:.4});
-  fitObserver.observe(fitSection);
+  ctaFlip.addEventListener('click', (e)=>{ e.preventDefault(); openQuoteForm(); });
 
   // Workframe tab switching
   const wfCaptions = {
-    strategy: 'Workframe: Strategy &amp; Research — full breakdown available in the detailed rate card',
-    ops: 'Workframe: Brand Management &amp; Operations — full breakdown available in the detailed rate card',
-    ecommerce: 'Workframe: Ecommerce &amp; GMB — full breakdown available in the detailed rate card',
-    copy: 'Workframe: Copy &amp; Visual Production — full breakdown available in the detailed rate card',
-    digital: 'Workframe: Digital &amp; Influencer Marketing — full breakdown available in the detailed rate card'
+    strategy: 'Workframe: Strategy &amp; Research',
+    ops: 'Workframe: Brand Management &amp; Operations',
+    ecommerce: 'Workframe: Ecommerce &amp; GMB',
+    copy: 'Workframe: Copy &amp; Visual Production',
+    digital: 'Workframe: Digital &amp; Influencer Marketing'
+  };
+  const wfDescriptions = {
+    strategy: 'Market audits and brand positioning to find the fit before any campaign begins.',
+    ops: 'Running multi-campaign timelines, budgets, and weekly quality control.',
+    ecommerce: 'Optimizing the buying journey: interface, customer flow, and on-platform product design.',
+    copy: 'Not just words and images — ideas rendered into a visual language of their own.',
+    digital: 'KOL networks, campaign data, and growth you can actually measure.'
   };
   const wfCaptionEl = document.getElementById('wfCaption');
+  const wfHighlightEl = document.getElementById('wfHighlightText');
+  function updateWfHighlight(tab){
+    if (wfHighlightEl && wfDescriptions[tab]) typewriterReveal(wfHighlightEl, wfDescriptions[tab]);
+  }
   document.querySelectorAll('.wf-tab-btn').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       const tab = btn.dataset.tab;
       document.querySelectorAll('.wf-tab-btn').forEach(b=> b.classList.toggle('active', b===btn));
       document.querySelectorAll('.wf-tab-panel').forEach(p=> p.classList.toggle('active', p.dataset.panel===tab));
       if (wfCaptionEl) wfCaptionEl.innerHTML = wfCaptions[tab] || '';
+      updateWfHighlight(tab);
     });
+    btn.addEventListener('mouseenter', ()=> updateWfHighlight(btn.dataset.tab));
   });
+  // Default box content on load = Strategy & Research (the default-active tab)
+  if (wfHighlightEl) typewriterReveal(wfHighlightEl, wfDescriptions.strategy);
 
   // Portfolio case-study lightbox: swipeable slide viewer over the real Canva deck exports
   const caseData = {
@@ -1002,6 +839,57 @@
     if (e.key === 'ArrowRight') goSlide(1);
     if (e.key === 'ArrowLeft') goSlide(-1);
   });
+
+  // "I need a quotation" lightbox: collects contact details, opens a pre-filled email to Babicone on submit.
+  const quoteLightbox = document.getElementById('quoteLightbox');
+  const quoteForm = document.getElementById('quoteForm');
+  const QUOTE_EMAIL = 'uyenngtranphuong@gmail.com';
+
+  function openQuoteForm(){
+    if (!quoteLightbox) return;
+    quoteLightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    const firstField = quoteForm ? quoteForm.querySelector('select, input') : null;
+    if (firstField) firstField.focus();
+  }
+  function closeQuoteForm(){
+    if (!quoteLightbox) return;
+    quoteLightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  const quoteCloseBtn = document.getElementById('quoteClose');
+  if (quoteCloseBtn) quoteCloseBtn.addEventListener('click', closeQuoteForm);
+  const quoteBackdrop = quoteLightbox ? quoteLightbox.querySelector('.lightbox-backdrop') : null;
+  if (quoteBackdrop) quoteBackdrop.addEventListener('click', closeQuoteForm);
+  const contactQuoteBtn = document.getElementById('contactQuoteBtn');
+  if (contactQuoteBtn) contactQuoteBtn.addEventListener('click', (e)=>{ e.preventDefault(); openQuoteForm(); });
+  document.addEventListener('keydown', (e)=>{
+    if (quoteLightbox && quoteLightbox.classList.contains('open') && e.key === 'Escape') closeQuoteForm();
+  });
+
+  if (quoteForm){
+    quoteForm.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const fd = new FormData(quoteForm);
+      const call = fd.get('call') || '';
+      const name = (fd.get('name') || '').trim();
+      const code = fd.get('phoneCode') || '';
+      const phone = (fd.get('phone') || '').trim();
+      const email = (fd.get('email') || '').trim();
+      const notes = (fd.get('notes') || '').trim();
+      const subject = `Quotation request — ${call}. ${name}`;
+      const body = [
+        `Call: ${call}.`,
+        `Name: ${name}`,
+        `Phone: ${code} ${phone}`,
+        `Email: ${email}`,
+        `Notes: ${notes || '-'}`
+      ].join('\n');
+      window.location.href = `mailto:${QUOTE_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      closeQuoteForm();
+      quoteForm.reset();
+    });
+  }
 </script>
 
 </body>
